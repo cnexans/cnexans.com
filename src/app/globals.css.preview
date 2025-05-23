@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%; /* Changed to pure black */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%; /* Changed to pure black */
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%; /* Changed to pure black */
+
+    --primary: 0 0% 0%; /* Changed to pure black */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 0 0% 0%; /* Changed to pure black */
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 35%; /* Darker gray for secondary text */
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 0 0% 0%; /* Changed to pure black */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 80%; /* Darker border for better contrast */
+    --input: 214.3 31.8% 80%; /* Darker input border */
+    --ring: 0 0% 0%; /* Changed to pure black */
+
+    --radius: 0.5rem;
+
+    /* Custom colors for Carlos Nexans blog - high contrast */
+    --teal-500: 173 80% 35%;
+    --teal-600: 175 84% 30%;
+    --teal-700: 175 77% 26%;
+
+    --silver-300: 210 20% 90%;
+    --silver-400: 210 16% 82%;
+    --silver-500: 210 12% 75%;
+
+    --green-500: 142 69% 45%;
+    --green-600: 142 71% 40%;
+    --green-700: 142 76% 35%;
+
+    /* Chart colors */
+    --chart-1: 173 80% 35%;
+    --chart-2: 210 12% 40%;
+    --chart-3: 142 69% 45%;
+    --chart-4: 210 40% 96.1%;
+    --chart-5: 0 0% 0%; /* Changed to pure black */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75%; /* Lighter gray for better contrast in dark mode */
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 25%; /* Lighter border for better contrast in dark mode */
+    --input: 217.2 32.6% 25%; /* Lighter input border in dark mode */
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Custom colors for Carlos Nexans blog - dark mode high contrast */
+    --teal-500: 173 70% 50%;
+    --teal-600: 175 84% 40%;
+    --teal-700: 175 77% 35%;
+
+    --silver-300: 210 15% 30%;
+    --silver-400: 210 12% 25%;
+    --silver-500: 210 10% 20%;
+
+    --green-500: 142 69% 58%;
+    --green-600: 142 71% 45%;
+    --green-700: 142 76% 36%;
+
+    /* Chart colors - dark mode */
+    --chart-1: 173 70% 50%;
+    --chart-2: 210 10% 70%;
+    --chart-3: 142 69% 58%;
+    --chart-4: 217.2 32.6% 17.5%;
+    --chart-5: 210 40% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Typography styles for Newsreader font */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-newsreader font-medium tracking-tight text-black dark:text-white;
+  }
+
+  p,
+  li,
+  blockquote {
+    @apply font-newsreader text-base leading-relaxed text-black dark:text-white md:text-lg md:leading-relaxed;
+  }
+
+  /* UI elements use Inter - removed .font-inter to avoid circular dependency */
+  button,
+  input,
+  select,
+  textarea,
+  .ui-text,
+  nav,
+  .badge,
+  .btn,
+  .nav-item,
+  .high-contrast-nav {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  /* Links that aren't in the Newsreader font use Inter */
+  a:not(.font-newsreader) {
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  /* Add this class to ensure Inter is applied to specific UI elements */
+  .ui-sans {
+    font-family: var(--font-inter), system-ui, sans-serif !important;
+  }
+
+  /* Monospace text uses Geist Mono */
+  code,
+  pre,
+  .mono {
+    font-family: "Geist Mono", monospace;
+  }
+}
+
+/* Custom styles for the blog */
+.prose-newsreader {
+  @apply prose-lg prose-slate max-w-none dark:prose-invert;
+  @apply prose-headings:font-newsreader prose-headings:font-medium prose-headings:text-black dark:prose-headings:text-white;
+  @apply prose-p:font-newsreader prose-p:text-base prose-p:text-black dark:prose-p:text-white md:prose-p:text-lg;
+  @apply prose-li:font-newsreader prose-li:text-black dark:prose-li:text-white;
+  @apply prose-a:text-teal-600 hover:prose-a:text-teal-700 dark:prose-a:text-teal-400 dark:hover:prose-a:text-teal-300;
+  @apply prose-blockquote:font-newsreader prose-blockquote:italic prose-blockquote:font-normal;
+  @apply prose-blockquote:border-l-2 prose-blockquote:border-teal-500;
+  @apply prose-code:font-mono;
+}
+
+/* Decorative drop cap for first paragraph in articles */
+.drop-cap:first-letter {
+  @apply font-newsreader float-left text-5xl font-medium leading-tight mr-2 mt-1;
+  @apply text-teal-600 dark:text-teal-400;
+}
+
+/* High contrast white background */
+.high-contrast-bg {
+  @apply bg-white dark:bg-slate-900;
+}
+
+/* Card styles */
+.high-contrast-card {
+  @apply bg-white border border-slate-200 shadow-sm dark:bg-slate-800 dark:border-slate-700;
+  transition: all 0.3s ease;
+}
+
+.high-contrast-card:hover {
+  @apply shadow-md;
+  transform: translateY(-2px);
+}
+
+/* Button styles */
+.high-contrast-button {
+  @apply bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-md transition-all duration-300;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 500;
+}
+
+.high-contrast-button:hover {
+  @apply shadow-md;
+  transform: translateY(-1px);
+}
+
+/* Navigation */
+.high-contrast-nav {
+  @apply bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 rounded-full py-2 px-4;
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  @apply shadow-md;
+}
+
+/* Decorative elements */
+.decorative-line {
+  position: relative;
+}
+
+.decorative-line::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  @apply bg-teal-600;
+  border-radius: 3px;
+}
+
+/* Secondary text - only for less important elements */
+.secondary-text {
+  @apply text-muted-foreground;
+}
+
+/* Code blocks with Geist Mono */
+pre code {
+  font-family: "Geist Mono", monospace !important;
+  @apply text-sm leading-relaxed;
+}
+
+/* Inline code */
+:not(pre) > code {
+  font-family: "Geist Mono", monospace !important;
+  @apply bg-slate-100 text-black dark:bg-slate-800 dark:text-white px-1.5 py-0.5 rounded text-sm;
+}
+
+/* Font utility classes */
+.font-inter {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}

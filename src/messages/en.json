@@ -1,7 +1,9 @@
 {
     "header": {
         "home": "Home",
-        "blog": "Blog"
+        "blog": "Blog",
+        "about": "About",
+        "contact": "Contact"
     }, 
     "home": {
         "latestPosts": "Latest Posts"

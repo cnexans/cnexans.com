@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { baseUrl } from "@/app/sitemap";
 import { getCanonicalUrl } from "@/i18n/utils";
+import { ArticleComments } from "@/components/article-comments";
+import { Calendar, Clock, Tag } from "lucide-react";
 
 export const dynamic = 'force-static'
 
@@ -90,12 +92,72 @@ export default async function Page({
   setRequestLocale(locale);
 
   const Content = await getContent(locale, folder);
+  const posts = await getBlogPosts();
+  const post = posts.find(
+    (post) => post.folder === folder && post.locale === locale
+  );
 
-  if (Content) {
+  if (Content && post) {
+    const formatDate = (date: string, locale: string) => {
+      const dateObj = new Date(date);
+      const options: Intl.DateTimeFormatOptions = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      };
+      return new Intl.DateTimeFormat(locale, options).format(dateObj);
+    };
+
+    const estimatedReadTime = Math.ceil(post.content.split(' ').length / 200); // ~200 words per minute
+
     return (
-      <div className="markdown-content">
-        <Content />
-      </div>
+      <article className="max-w-4xl mx-auto">
+        {/* Article Header */}
+        <header className="mb-12">
+          <h1 className="text-4xl font-bold text-foreground mb-6 text-balance">
+            {post.metadata.title}
+          </h1>
+          
+          <div className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm mb-6">
+            <div className="flex items-center gap-2">
+              <Calendar size={16} />
+              <span>{formatDate(post.metadata.date, locale)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock size={16} />
+              <span>{estimatedReadTime} {locale === 'es' ? 'min de lectura' : 'min read'}</span>
+            </div>
+          </div>
+
+          {post.metadata.tags && post.metadata.tags.length > 0 && (
+            <div className="flex items-center gap-2 mb-8">
+              <Tag size={16} className="text-muted-foreground" />
+              <div className="flex flex-wrap gap-2">
+                {post.metadata.tags.map((tag: string) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-xs font-medium"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
+            {post.metadata.description}
+          </p>
+        </header>
+
+        {/* Article Content */}
+        <div className="markdown-content">
+          <Content />
+        </div>
+
+        {/* Comments Section */}
+        <ArticleComments articleTitle={post.metadata.title} locale={locale} />
+      </article>
     );
   }
 

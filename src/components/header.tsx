@@ -3,8 +3,6 @@
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
-import { cn } from "../lib/utils";
 
 export function Header() {
   const locale = useLocale();
@@ -12,32 +10,30 @@ export function Header() {
   const navItems = [
     { name: t("header.home"), path: `/` },
     { name: t("header.blog"), path: `/blog` },
+    { name: t("header.about"), path: `/about` },
+    { name: t("header.contact"), path: `/contact` },
   ];
 
   return (
-    <header className="my-8">
-      <div className="container flex flex-col lg:flex-row items-center justify-between">
-        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
-          <Link href={`/`} className="flex items-center space-x-2" locale={locale}>
-            <Image src="/brand/logo.png" alt="logo" width={24} height={24} />
+    <header className="border-b border-border bg-background">
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-foreground no-underline" locale={locale}>
+            {"Nexans"}
           </Link>
-          <nav className="gap-6 flex flex-row flex-center">
+          <nav className="flex items-center gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className={cn(
-                  "text-lg font-medium transition-colors hover:text-primary"
-                )}
+                className="text-foreground no-underline hover:text-primary transition-colors"
                 locale={locale}
               >
                 {item.name}
               </Link>
             ))}
-          </nav>
-          <div className="flex items-center gap-4">
             <LanguageSwitcher />
-          </div>
+          </nav>
         </div>
       </div>
     </header>

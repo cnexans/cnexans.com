@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import { QueryProvider } from "@/components/query-provider";
 
 export const dynamic = "force-static";
 
@@ -56,15 +57,17 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased px-6 lg:px-0`}
-      >
-        <div className="flex flex-col min-h-screen max-w-screen-md mx-auto min-h-screen">
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </NextIntlClientProvider>
+      <body className={`font-sans ${geistSans.variable} ${geistMono.variable}`}>
+        <div className="min-h-screen bg-background">
+          <QueryProvider>
+            <NextIntlClientProvider messages={messages} locale={locale}>
+              <Header />
+              <main className="max-w-4xl mx-auto px-4 py-12">
+                {children}
+              </main>
+              <Footer />
+            </NextIntlClientProvider>
+          </QueryProvider>
         </div>
       </body>
     </html>

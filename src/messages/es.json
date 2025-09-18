@@ -1,7 +1,9 @@
 {
     "header": {
         "home": "Inicio",
-        "blog": "Blog"
+        "blog": "Blog",
+        "about": "Sobre Mí",
+        "contact": "Contacto"
     }, 
     "home": {
         "latestPosts": "Últimos Artículos"

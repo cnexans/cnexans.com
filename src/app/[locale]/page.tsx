@@ -2,10 +2,14 @@ import { routing } from "@/i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import LatestPosts from "@/components/latest-posts";
+import { FeaturedArticles } from "@/components/featured-articles";
+import { PublishedBooks } from "@/components/published-books";
+import { FeaturedProjects } from "@/components/featured-projects";
+import { SocialLinks } from "@/components/social-links";
+import { VisitorCounter } from "@/components/visitor-counter";
 import { getBlogPosts } from "@/content/utils";
-import "./home.css";
 import { getCanonicalUrl } from "@/i18n/utils";
+import { BookOpen, Users, BoxIcon, Rss } from "lucide-react";
 
 export const dynamic = 'force-static'
 
@@ -43,12 +47,62 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 
   try {
     const Content = (await import(`@/content/home/${locale}.mdx`)).default;
+    
     return (
       <>
-        <div className="home markdown-content">
-          <Content />
-        </div>
-        <LatestPosts posts={latestPosts} />
+        {/* Hero Section */}
+        <section className="mb-16">
+          <div className="markdown-content">
+            <Content />
+          </div>
+          <div className="mt-8">
+            <VisitorCounter />
+          </div>
+        </section>
+
+        {/* Featured Articles */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <Rss className="text-foreground" size={24} />
+            <h2 className="text-2xl font-bold text-foreground">
+              {locale === 'es' ? 'Artículos Destacados' : 'Featured Articles'}
+            </h2>
+          </div>
+          <FeaturedArticles posts={latestPosts} />
+        </section>
+
+        {/* Published Books */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <BookOpen className="text-foreground" size={24} />
+            <h2 className="text-2xl font-bold text-foreground">
+              {locale === 'es' ? 'Libros Publicados' : 'Published Books'}
+            </h2>
+          </div>
+          <PublishedBooks />
+        </section>
+
+        {/* Featured Projects */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <BoxIcon className="text-foreground" size={24} />
+            <h2 className="text-2xl font-bold text-foreground">
+              {locale === 'es' ? 'Proyectos Destacados' : 'Featured Projects'}
+            </h2>
+          </div>
+          <FeaturedProjects />
+        </section>
+
+        {/* Social Links */}
+        <section className="mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <Users className="text-foreground" size={24} />
+            <h2 className="text-2xl font-bold text-foreground">
+              {locale === 'es' ? 'Conecta Conmigo' : 'Connect With Me'}
+            </h2>
+          </div>
+          <SocialLinks />
+        </section>
       </>
     );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

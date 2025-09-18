@@ -1,8 +1,8 @@
-import PostList from "@/components/post-lists";
 import { getBlogPosts } from "@/content/utils";
 import { routing } from "@/i18n/routing";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { setRequestLocale } from "next-intl/server";
+import BlogPageClient from "@/components/blog-page-client";
 
 export const dynamic = 'force-static'
 
@@ -14,12 +14,12 @@ export function generateStaticParams() {
 
 const metadata = {
   es: {
-    title: "Blog",
-    description: "Blog",
+    title: "Artículos",
+    description: "Exploraciones sobre matemáticas, ciencias de la computación, programación y reflexiones personales.",
   },
   en: {
-    title: "Blog",
-    description: "Blog",
+    title: "Articles",
+    description: "Explorations on mathematics, computer science, programming and personal reflections.",
   },
 };
 
@@ -45,6 +45,7 @@ export const generateMetadata = async ({
   };
 };
 
+
 export default async function Page({
   params,
 }: {
@@ -54,12 +55,6 @@ export default async function Page({
   // Enable static rendering
   setRequestLocale(locale);
   const posts = (await getBlogPosts()).filter((post) => post.locale === locale);
-  return (
-    <div>
-      <h1 className="text-4xl font-bold my-4">Artículos</h1>
-      <div className="flex flex-col space-y-4">
-        <PostList posts={posts} />
-      </div>
-    </div>
-  );
+  
+  return <BlogPageClient posts={posts} locale={locale} />;
 }

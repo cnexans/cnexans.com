@@ -5,7 +5,7 @@ import "@/styles/highlight-js/github-dark.css";
 import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Newsreader } from "next/font/google";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-static";
@@ -25,6 +25,26 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Load Newsreader font for headings and body text
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-newsreader",
+  // Include both regular and italic styles
+  style: ["normal", "italic"],
+  // Include multiple weights
+  weight: ["400", "500", "600", "700"],
+})
+
+// Make sure the Inter font is loaded with all the weights we need
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+  // Include multiple weights for UI elements
+  weight: ["400", "500", "600", "700"],
+})
 
 export const metadata: Metadata = {
   alternates: {
@@ -57,7 +77,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased px-6 lg:px-0`}
+        className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${inter.variable} antialiased px-6 lg:px-0`}
       >
         <div className="flex flex-col min-h-screen max-w-screen-md mx-auto min-h-screen">
           <NextIntlClientProvider messages={messages} locale={locale}>

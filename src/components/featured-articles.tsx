@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { Calendar } from "lucide-react";
 import { useLocale } from "next-intl";
 import { BlogPost } from "@/content/utils";
+import { LikeButton } from "./like-button";
 
 interface FeaturedArticlesProps {
   posts: BlogPost[];
@@ -63,9 +64,12 @@ export function FeaturedArticles({ posts }: FeaturedArticlesProps) {
             {post.metadata.description}
           </p>
 
-          <Link href={`/blog/${post.folder}`} className="text-foreground text-sm font-medium no-underline hover:text-primary transition-colors" locale={locale}>
-            Leer más →
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href={`/blog/${post.folder}`} className="text-foreground text-sm font-medium no-underline hover:text-primary transition-colors" locale={locale}>
+              Leer más →
+            </Link>
+            <LikeButton postSlug={post.metadata.slug} size="sm" />
+          </div>
         </article>
       ))}
     </div>

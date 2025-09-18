@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search, Calendar } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { BlogPost } from "@/content/utils";
+import { LikeButton } from "./like-button";
 
 interface BlogPageProps {
   posts: BlogPost[];
@@ -138,9 +139,12 @@ export default function BlogPageClient({ posts, locale }: BlogPageProps) {
 
                 <p className="text-muted-foreground leading-relaxed mb-4 text-pretty">{post.metadata.description}</p>
 
-                <Link href={`/blog/${post.folder}`} className="text-foreground text-sm font-medium no-underline hover:text-primary transition-colors" locale={locale}>
-                  {locale === 'es' ? 'Leer más' : 'Read more'} →
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link href={`/blog/${post.folder}`} className="text-foreground text-sm font-medium no-underline hover:text-primary transition-colors" locale={locale}>
+                    {locale === 'es' ? 'Leer más' : 'Read more'} →
+                  </Link>
+                  <LikeButton postSlug={post.metadata.slug} size="sm" />
+                </div>
               </article>
             ))}
           </div>

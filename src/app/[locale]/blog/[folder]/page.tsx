@@ -6,6 +6,7 @@ import { baseUrl } from "@/app/sitemap";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { ArticleComments } from "@/components/article-comments";
 import { Calendar, Clock, Tag } from "lucide-react";
+import { LikeButton } from "@/components/like-button";
 
 export const dynamic = 'force-static'
 
@@ -114,9 +115,14 @@ export default async function Page({
       <article className="max-w-4xl mx-auto">
         {/* Article Header */}
         <header className="mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-6 text-balance">
-            {post.metadata.title}
-          </h1>
+          <div className="flex items-start justify-between mb-6">
+            <h1 className="text-4xl font-bold text-foreground text-balance flex-1">
+              {post.metadata.title}
+            </h1>
+            <div className="ml-6 mt-2">
+              <LikeButton postSlug={post.metadata.slug} size="lg" />
+            </div>
+          </div>
           
           <div className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm mb-6">
             <div className="flex items-center gap-2">

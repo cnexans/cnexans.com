@@ -44,10 +44,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <h1 className="text-3xl font-bold text-foreground mb-6">
             {locale === 'es' ? 'Contacto' : 'Contact'}
           </h1>
-          <div className="prose prose-lg max-w-none">
-            <div className="text-muted-foreground text-lg leading-relaxed markdown-content">
-              <Content />
-            </div>
+          <div className="markdown-content">
+            <Content />
           </div>
         </section>
 

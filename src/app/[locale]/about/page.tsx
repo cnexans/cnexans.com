@@ -51,10 +51,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             </h1>
           </div>
 
-          <div className="prose prose-lg max-w-none">
-            <div className="text-foreground leading-relaxed space-y-6 markdown-content">
-              <Content />
-            </div>
+          <div className="markdown-content">
+            <Content />
           </div>
         </section>
 

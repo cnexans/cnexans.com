@@ -119,7 +119,7 @@ export function NowPlaying() {
               </span>
             )}
           </div>
-          <p className="text-muted-foreground text-sm truncate">
+          <p className="text-foreground text-sm truncate">
             {trackData.artist} • {trackData.album}
           </p>
           {trackData.progress && trackData.duration && (

@@ -44,7 +44,7 @@ export function CurrentlyReading() {
               <p className="text-muted-foreground text-sm mb-2">por {book.author}</p>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{book.thoughts}</p>
+          <p className="text-sm text-foreground leading-relaxed text-pretty">{book.thoughts}</p>
         </div>
       ))}
     </div>

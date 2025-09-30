@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { getCanonicalUrl } from "@/i18n/utils";
-import { Mail, MessageSquare, User } from "lucide-react";
+import { ContactForm } from "@/components/contact-form";
 
 export const dynamic = 'force-static'
 
@@ -50,57 +50,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </section>
 
         {/* Contact Form */}
-        <section className="max-w-2xl">
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-                <Mail size={16} />
-                Email
-              </label>
-              <input 
-                id="email" 
-                type="email" 
-                placeholder={locale === 'es' ? 'tu@email.com' : 'your@email.com'}
-                required 
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="subject" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-                <User size={16} />
-                {locale === 'es' ? 'Asunto' : 'Subject'}
-              </label>
-              <input
-                id="subject"
-                type="text"
-                placeholder={locale === 'es' ? '¿Sobre qué te gustaría conversar?' : 'What would you like to talk about?'}
-                required
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-                <MessageSquare size={16} />
-                {locale === 'es' ? 'Mensaje' : 'Message'}
-              </label>
-              <textarea
-                id="message"
-                placeholder={locale === 'es' ? 'Comparte tus ideas, preguntas o propuestas...' : 'Share your ideas, questions or proposals...'}
-                required
-                rows={6}
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="bg-foreground text-background border border-foreground px-6 py-2 font-medium rounded-md hover:bg-foreground/90 transition-colors"
-            >
-              {locale === 'es' ? 'Enviar Mensaje' : 'Send Message'}
-            </button>
-          </form>
+        <section>
+          <ContactForm locale={locale} />
         </section>
       </>
     );

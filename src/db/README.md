@@ -1,73 +1,70 @@
-# 🚀 Comments System Database Setup
+# Database Schema
 
-## 📋 Migration Files (Run in Order)
+## Quick Start
 
-```
-src/db/
-├── 000_create-comments-public-schema.sql  ← Run FIRST
-└── 001_configure-rls-policies.sql         ← Run SECOND
-```
+This project uses a **single schema file** instead of migrations:
 
----
-
-## ✅ Step 1: Create Table
-
-Run `000_create-comments-public-schema.sql` in Supabase SQL Editor.
-
-Creates:
-- `public.comments` table
-- Indexes for performance
-- `increment_comment_likes()` function
-
----
-
-## ✅ Step 2: Configure Security
-
-Run `001_configure-rls-policies.sql` in Supabase SQL Editor.
-
-Creates 3 RLS policies:
-1. **SELECT**: Anyone (including unauthenticated) can read `is_visible = true`
-2. **INSERT**: Anyone (including unauthenticated) can insert `is_visible = false`
-3. **ALL**: Service role has full access for admin
-
----
-
-## 🧪 Test
-
-```sql
--- Test insert
-INSERT INTO public.comments (content_id, locale, name, message)
-VALUES ('test', 'en', 'Test', 'Test message');
-
--- Approve it
-UPDATE public.comments SET is_visible = true WHERE content_id = 'test';
-
--- Read it
-SELECT * FROM public.comments WHERE is_visible = true;
+```bash
+# Apply the complete schema to your Supabase project
+psql -h <your-db-host> -U postgres -d postgres -f schema.sql
 ```
 
----
+Or use Supabase Dashboard:
+1. Go to SQL Editor
+2. Copy contents of `schema.sql`
+3. Run the query
 
-## 📊 Manage Comments
+## Schema File
 
-```sql
--- View pending
-SELECT * FROM public.comments WHERE is_visible = false ORDER BY created_at DESC;
+**`schema.sql`** - Complete database schema with:
+- 📝 Comments table (moderated comments)
+- 📧 Contacts table (contact form submissions)
+- ❤️ Post likes table (likes with anonymous auth)
+- 🔧 Helper functions
+- 🔓 No RLS (permissions granted directly)
 
--- Approve
-UPDATE public.comments SET is_visible = true WHERE id = 1;
+## Tables
 
--- Delete spam
-DELETE FROM public.comments WHERE id = 1;
-```
+### `comments`
+User comments on blog posts. Moderated (`is_visible = false` by default).
 
----
+### `contacts`
+Contact form submissions. Admin-only access via Dashboard.
 
-## 🔒 Security
+### `post_likes`
+Post likes using Supabase Anonymous Authentication.
 
-✅ Anyone can read approved comments  
-✅ Anyone can submit comments (pending approval)  
-❌ Public cannot update/delete  
-✅ Service role has full access
+## No Migrations
 
-All new comments default to `is_visible = false` and require manual approval.
+We keep it simple with a single schema file instead of incremental migrations.
+
+Benefits:
+- ✅ Single source of truth
+- ✅ Easy to understand
+- ✅ Quick to apply to new environments
+- ✅ No migration order complexity
+
+## Important Notes
+
+### Anonymous Authentication Required
+
+For likes to work, enable Anonymous Sign-In in Supabase:
+1. Authentication → Providers
+2. Enable "Anonymous Sign-In"
+
+See `ENABLE_ANONYMOUS_AUTH.md` for details.
+
+### No RLS Policy
+
+This project doesn't use Row Level Security. See `NO_RLS_POLICY.md` for reasoning.
+
+## Documentation
+
+- `schema.sql` - The complete database schema
+- `NO_RLS_POLICY.md` - Why we don't use RLS
+- `ENABLE_ANONYMOUS_AUTH.md` - How to enable anonymous auth
+
+## Old Migration Files
+
+Migration files `000_*.sql` through `011_*.sql` are deprecated.
+Use `schema.sql` instead for new deployments.

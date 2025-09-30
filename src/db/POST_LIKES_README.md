@@ -1,16 +1,17 @@
 # Post Likes Functionality
 
 ## Overview
-The post likes system allows users to like blog posts and other content on the site. Likes are stored in Supabase and tracked by content ID, similar to the comments system.
+The post likes system allows users to like blog posts and other content on the site. Likes are stored in Supabase using **Supabase Anonymous Authentication** for user identity management. Anonymous users can later convert to permanent users by linking an email or OAuth identity.
 
 ## Database Structure
 
 ### Table: `post_likes`
 - `id`: Serial primary key
 - `content_id`: Text identifier for the content (e.g., `article-no-code-era`)
-- `user_fingerprint`: Unique identifier for the user
+- `user_id`: UUID foreign key to `auth.users.id`
 - `created_at`: Timestamp of when the like was created
-- Unique constraint on `(content_id, user_fingerprint)` to prevent duplicate likes
+- Unique constraint on `(content_id, user_id)` to prevent duplicate likes
+- Foreign key with `ON DELETE CASCADE` to automatically clean up likes when user is deleted
 
 ### Database Functions
 
@@ -21,19 +22,26 @@ Returns the total number of likes for a given content ID.
 SELECT public.get_post_like_count('article-no-code-era');
 ```
 
-#### `has_user_liked_post(content_id TEXT, user_fingerprint TEXT)`
+#### `has_user_liked_post(content_id TEXT, user_id UUID)`
 Checks if a specific user has liked a given content.
 
 ```sql
-SELECT public.has_user_liked_post('article-no-code-era', 'user123');
+SELECT public.has_user_liked_post('article-no-code-era', 'user-uuid-here');
 ```
 
-#### `toggle_post_like(content_id TEXT, user_fingerprint TEXT)`
+#### `toggle_post_like(content_id TEXT, user_id UUID)`
 Toggles a like for a user on a specific content. Returns a JSONB object with the new state.
 
 ```sql
-SELECT public.toggle_post_like('article-no-code-era', 'user123');
+SELECT public.toggle_post_like('article-no-code-era', 'user-uuid-here');
 -- Returns: {"liked": true, "count": 5}
+```
+
+#### `get_user_liked_posts(user_id UUID)`
+Returns all content IDs that a user has liked.
+
+```sql
+SELECT * FROM public.get_user_liked_posts('user-uuid-here');
 ```
 
 ## Content ID Convention
@@ -91,19 +99,22 @@ Features:
 
 Location: `/src/lib/post-likes.ts`
 
-#### `generateUserFingerprint()`
-Creates a unique identifier for anonymous users and stores it in localStorage.
+#### `ensureAuthenticatedUser()`
+Ensures the user is signed in (anonymously or permanently). Returns the user ID.
+- Checks if user already has a session
+- If not, signs in anonymously using `supabase.auth.signInAnonymously()`
+- Returns the user's UUID
 
 #### `getPostLikeCount(contentId: string)`
 Fetches the like count for a specific content.
 
-#### `hasUserLikedPost(contentId: string, userFingerprint: string)`
+#### `hasUserLikedPost(contentId: string, userId: string)`
 Checks if a user has liked a content.
 
-#### `togglePostLike(contentId: string, userFingerprint: string)`
+#### `togglePostLike(contentId: string, userId: string)`
 Toggles a like and returns the new state.
 
-#### `getUserLikedPosts(userFingerprint: string)`
+#### `getUserLikedPosts(userId: string)`
 Gets all content IDs that a user has liked.
 
 #### `getMultiplePostLikeCounts(contentIds: string[])`
@@ -129,11 +140,13 @@ export default function BlogPost({ folder }: { folder: string }) {
 
 ## Security
 
+- **Uses Supabase Anonymous Authentication** - No manual fingerprinting needed
 - Row Level Security (RLS) is enabled on the `post_likes` table
 - All database functions use `SECURITY DEFINER` with fixed `search_path`
 - Public read access is allowed for like counts
 - Insert and delete operations are controlled through RPC functions
-- User fingerprints are stored in localStorage and are not personally identifiable
+- Foreign key ensures referential integrity with `auth.users`
+- Anonymous users can upgrade to permanent users by linking identities
 
 ## Migrations
 
@@ -142,6 +155,7 @@ The likes functionality was implemented through the following migrations:
 1. `006_create-post-likes-table.sql` - Creates the table and functions
 2. `007_configure-post-likes-rls.sql` - Sets up RLS policies
 3. `008_fix-post-likes-security.sql` - Fixes security warnings by setting search_path
+4. `009_update-post-likes-for-auth.sql` - **Updated to use Supabase Anonymous Auth** (replaces user_fingerprint with user_id)
 
 ## Testing
 
@@ -151,21 +165,28 @@ To test the implementation:
 -- Get like count for a post
 SELECT public.get_post_like_count('article-test');
 
--- Like a post
-SELECT public.toggle_post_like('article-test', 'test-user-123');
+-- Get a test user ID (or create anonymous user via API)
+-- For testing, you can use any valid UUID from auth.users
+
+-- Like a post (replace with actual user UUID)
+SELECT public.toggle_post_like('article-test', 'user-uuid-here');
 
 -- Check if user liked the post
-SELECT public.has_user_liked_post('article-test', 'test-user-123');
+SELECT public.has_user_liked_post('article-test', 'user-uuid-here');
+
+-- Get all posts liked by user
+SELECT * FROM public.get_user_liked_posts('user-uuid-here');
 
 -- Unlike the post
-SELECT public.toggle_post_like('article-test', 'test-user-123');
+SELECT public.toggle_post_like('article-test', 'user-uuid-here');
 ```
 
 ## Future Improvements
 
 Potential enhancements:
 - Add rate limiting to prevent abuse
-- Implement more sophisticated user fingerprinting
 - Add analytics for tracking popular content
 - Support for different types of reactions (not just likes)
 - Add notification system for content creators
+- Implement automatic cleanup of old anonymous users (see [Supabase Anonymous Auth docs](https://supabase.com/docs/guides/auth/auth-anonymous))
+- Add UI for converting anonymous users to permanent users

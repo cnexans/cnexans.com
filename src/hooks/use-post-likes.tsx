@@ -5,25 +5,35 @@ import {
   getPostLikeCount,
   getUserLikedPosts,
   togglePostLike as togglePostLikeAPI,
-  generateUserFingerprint,
+  ensureAuthenticatedUser,
 } from "@/lib/post-likes";
 
 export function usePostLikes() {
   const [likes, setLikes] = useState<Record<string, number>>({});
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
-  const [userFingerprint, setUserFingerprint] = useState<string>("");
+  const [userId, setUserId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize user fingerprint and load user's liked posts
+  // Initialize user (sign in anonymously if needed) and load user's liked posts
   useEffect(() => {
-    const fingerprint = generateUserFingerprint();
-    setUserFingerprint(fingerprint);
+    const initializeUser = async () => {
+      const id = await ensureAuthenticatedUser();
+      
+      if (!id) {
+        console.error('Unable to authenticate user');
+        setIsLoading(false);
+        return;
+      }
+      
+      setUserId(id);
 
-    // Load user's liked posts from Supabase
-    getUserLikedPosts(fingerprint).then((likedPosts) => {
+      // Load user's liked posts from Supabase
+      const likedPosts = await getUserLikedPosts(id);
       setUserLikes(new Set(likedPosts));
       setIsLoading(false);
-    });
+    };
+
+    initializeUser();
   }, []);
 
   // Load like count for a specific post when needed
@@ -38,7 +48,7 @@ export function usePostLikes() {
   }, [likes]);
 
   const toggleLike = useCallback(async (contentId: string) => {
-    if (!userFingerprint || isLoading) return;
+    if (!userId || isLoading) return;
 
     const wasLiked = userLikes.has(contentId);
     
@@ -59,7 +69,7 @@ export function usePostLikes() {
     }));
 
     // Call API to toggle like
-    const result = await togglePostLikeAPI(contentId, userFingerprint);
+    const result = await togglePostLikeAPI(contentId, userId);
     
     if (result) {
       // Update with the server response
@@ -94,7 +104,7 @@ export function usePostLikes() {
         [contentId]: Math.max((prev[contentId] || 0) + (wasLiked ? 1 : -1), 0),
       }));
     }
-  }, [userFingerprint, userLikes, isLoading]);
+  }, [userId, userLikes, isLoading]);
 
   const getLikeCount = useCallback((contentId: string): number => {
     // Load count from Supabase if not already loaded

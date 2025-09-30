@@ -1,71 +1,117 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import {
+  getPostLikeCount,
+  getUserLikedPosts,
+  togglePostLike as togglePostLikeAPI,
+  generateUserFingerprint,
+} from "@/lib/post-likes";
 
 export function usePostLikes() {
   const [likes, setLikes] = useState<Record<string, number>>({});
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
+  const [userFingerprint, setUserFingerprint] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Cargar likes del localStorage al montar el componente
+  // Initialize user fingerprint and load user's liked posts
   useEffect(() => {
-    const storedLikes = localStorage.getItem('post-likes');
-    const storedUserLikes = localStorage.getItem('user-likes');
-    
-    if (storedLikes) {
-      setLikes(JSON.parse(storedLikes));
-    }
-    
-    if (storedUserLikes) {
-      setUserLikes(new Set(JSON.parse(storedUserLikes)));
-    }
+    const fingerprint = generateUserFingerprint();
+    setUserFingerprint(fingerprint);
+
+    // Load user's liked posts from Supabase
+    getUserLikedPosts(fingerprint).then((likedPosts) => {
+      setUserLikes(new Set(likedPosts));
+      setIsLoading(false);
+    });
   }, []);
 
-  // Guardar likes en localStorage cuando cambien
-  useEffect(() => {
-    localStorage.setItem('post-likes', JSON.stringify(likes));
+  // Load like count for a specific post when needed
+  const loadLikeCount = useCallback(async (contentId: string) => {
+    if (likes[contentId] !== undefined) return; // Already loaded
+    
+    const count = await getPostLikeCount(contentId);
+    setLikes((prev) => ({
+      ...prev,
+      [contentId]: count,
+    }));
   }, [likes]);
 
-  useEffect(() => {
-    localStorage.setItem('user-likes', JSON.stringify(Array.from(userLikes)));
-  }, [userLikes]);
+  const toggleLike = useCallback(async (contentId: string) => {
+    if (!userFingerprint || isLoading) return;
 
-  const toggleLike = (postSlug: string) => {
-    const isLiked = userLikes.has(postSlug);
+    const wasLiked = userLikes.has(contentId);
     
-    if (isLiked) {
-      // Quitar like
-      setUserLikes(prev => {
+    // Optimistic update
+    setUserLikes((prev) => {
+      const newSet = new Set(prev);
+      if (wasLiked) {
+        newSet.delete(contentId);
+      } else {
+        newSet.add(contentId);
+      }
+      return newSet;
+    });
+    
+    setLikes((prev) => ({
+      ...prev,
+      [contentId]: Math.max((prev[contentId] || 0) + (wasLiked ? -1 : 1), 0),
+    }));
+
+    // Call API to toggle like
+    const result = await togglePostLikeAPI(contentId, userFingerprint);
+    
+    if (result) {
+      // Update with the server response
+      setLikes((prev) => ({
+        ...prev,
+        [contentId]: result.count,
+      }));
+      
+      setUserLikes((prev) => {
         const newSet = new Set(prev);
-        newSet.delete(postSlug);
+        if (result.liked) {
+          newSet.add(contentId);
+        } else {
+          newSet.delete(contentId);
+        }
+        return newSet;
+      });
+    } else {
+      // Revert optimistic update on error
+      setUserLikes((prev) => {
+        const newSet = new Set(prev);
+        if (wasLiked) {
+          newSet.add(contentId);
+        } else {
+          newSet.delete(contentId);
+        }
         return newSet;
       });
       
-      setLikes(prev => ({
+      setLikes((prev) => ({
         ...prev,
-        [postSlug]: Math.max((prev[postSlug] || 0) - 1, 0)
-      }));
-    } else {
-      // Agregar like
-      setUserLikes(prev => new Set(prev).add(postSlug));
-      
-      setLikes(prev => ({
-        ...prev,
-        [postSlug]: (prev[postSlug] || 0) + 1
+        [contentId]: Math.max((prev[contentId] || 0) + (wasLiked ? 1 : -1), 0),
       }));
     }
-  };
+  }, [userFingerprint, userLikes, isLoading]);
 
-  const getLikeCount = (postSlug: string): number => {
-    return likes[postSlug] || 0;
-  };
+  const getLikeCount = useCallback((contentId: string): number => {
+    // Load count from Supabase if not already loaded
+    if (likes[contentId] === undefined && !isLoading) {
+      loadLikeCount(contentId);
+    }
+    return likes[contentId] || 0;
+  }, [likes, isLoading, loadLikeCount]);
 
-  const isLiked = (postSlug: string): boolean => {
-    return userLikes.has(postSlug);
-  };
+  const isLiked = useCallback((contentId: string): boolean => {
+    return userLikes.has(contentId);
+  }, [userLikes]);
 
   return {
     toggleLike,
     getLikeCount,
-    isLiked
+    isLiked,
+    isLoading,
   };
 }

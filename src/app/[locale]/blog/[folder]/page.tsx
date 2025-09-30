@@ -120,7 +120,7 @@ export default async function Page({
               {post.metadata.title}
             </h1>
             <div className="ml-6 mt-2">
-              <LikeButton postSlug={post.metadata.slug} size="lg" />
+              <LikeButton postSlug={`article-${folder}`} size="lg" />
             </div>
           </div>
           

@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </section>
 
         {/* Published Books */}
-        <section className="mb-16">
+        <section className="mb-16 hidden">
           <div className="flex items-center gap-3 mb-8">
             <BookOpen className="text-foreground" size={24} />
             <h2 className="text-2xl font-bold text-foreground">
@@ -83,7 +83,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </section>
 
         {/* Featured Projects */}
-        <section className="mb-16">
+        <section className="mb-16 hidden">
           <div className="flex items-center gap-3 mb-8">
             <BoxIcon className="text-foreground" size={24} />
             <h2 className="text-2xl font-bold text-foreground">

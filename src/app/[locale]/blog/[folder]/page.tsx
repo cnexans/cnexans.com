@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { baseUrl } from "@/app/sitemap";
 import { getCanonicalUrl } from "@/i18n/utils";
-import { ArticleComments } from "@/components/article-comments";
+import { UnifiedComments } from "@/components/unified-comments";
 import { Calendar, Clock, Tag } from "lucide-react";
 import { LikeButton } from "@/components/like-button";
 
@@ -162,7 +162,11 @@ export default async function Page({
         </div>
 
         {/* Comments Section */}
-        <ArticleComments articleTitle={post.metadata.title} locale={locale} />
+        <UnifiedComments 
+          contentId={`article-${folder}`}
+          locale={locale}
+          contentTitle={post.metadata.title}
+        />
       </article>
     );
   }

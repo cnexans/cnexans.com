@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { CurrentlyReading } from "@/components/currently-reading";
 import { NowPlaying } from "@/components/now-playing";
-import { Guestbook } from "@/components/guestbook";
+import { UnifiedComments } from "@/components/unified-comments";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { User, BookOpen, Music } from "lucide-react";
 
@@ -80,7 +80,10 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 
         {/* Guestbook */}
         <section className="mb-16">
-          <Guestbook />
+          <UnifiedComments 
+            contentId="guestbook"
+            locale={locale}
+          />
         </section>
       </>
     );

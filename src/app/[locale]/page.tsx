@@ -6,7 +6,7 @@ import { FeaturedArticles } from "@/components/featured-articles";
 import { PublishedBooks } from "@/components/published-books";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { SocialLinks } from "@/components/social-links";
-import { VisitorCounter } from "@/components/visitor-counter";
+import { RealtimeVisitorCounter } from "@/components/realtime-visitor-counter";
 import { getBlogPosts } from "@/content/utils";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { BookOpen, Users, BoxIcon, Rss } from "lucide-react";
@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             <Content />
           </div>
           <div className="mt-8">
-            <VisitorCounter />
+            <RealtimeVisitorCounter locale={locale} />
           </div>
         </section>
 

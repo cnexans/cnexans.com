@@ -5,6 +5,8 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
+const title = "CN.";
+
 export function Header() {
   const locale = useLocale();
   const t = useTranslations();
@@ -22,8 +24,8 @@ export function Header() {
         <div className="flex flex-col space-y-4 md:hidden">
           {/* Logo */}
           <div className="flex justify-center">
-            <Link href="/" className="text-xl font-bold text-foreground no-underline font-serif" locale={locale}>
-              {"Nexans"}
+            <Link href="/" className="text-xl font-bold text-foreground no-underline font-merienda" locale={locale}>
+              {title}
             </Link>
           </div>
           
@@ -52,8 +54,8 @@ export function Header() {
         <div className="hidden md:block lg:hidden">
           {/* First row: Logo + Navigation */}
           <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="text-xl font-bold text-foreground no-underline font-serif" locale={locale}>
-              {"Nexans"}
+            <Link href="/" className="text-xl font-bold text-foreground no-underline font-merienda" locale={locale}>
+              {title}
             </Link>
             <nav className="flex items-center gap-6">
               {navItems.map((item) => (
@@ -79,8 +81,8 @@ export function Header() {
         {/* Desktop Layout - Everything in one row */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-foreground no-underline font-serif" locale={locale}>
-              {"Nexans"}
+            <Link href="/" className="text-2xl font-bold text-foreground no-underline font-merienda" locale={locale}>
+              {title}
             </Link>
             <nav className="flex items-center gap-8">
               {navItems.map((item) => (

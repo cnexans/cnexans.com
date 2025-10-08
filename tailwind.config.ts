@@ -60,6 +60,9 @@ const config = {
         'book-antiqua': ["var(--font-book-antiqua)"],
         'palatino': ["var(--font-palatino)"],
         'pagella': ["var(--font-pagella)"],
+        'charm': ["var(--font-charm)"],
+        'cookie': ["var(--font-cookie)"],
+        'merienda': ["var(--font-merienda)"],
       },
       borderRadius: {
         lg: "var(--radius)",

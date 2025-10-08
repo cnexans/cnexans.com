@@ -5,7 +5,7 @@ import "@/styles/highlight-js/github-dark.css";
 import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Charm, Cookie, Merienda } from "next/font/google";
 import { notFound } from "next/navigation";
 import { QueryProvider } from "@/components/query-provider";
 
@@ -25,6 +25,24 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const charm = Charm({
+  variable: "--font-charm",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const cookie = Cookie({
+  variable: "--font-cookie",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const merienda = Merienda({
+  variable: "--font-merienda",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -57,7 +75,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={`font-sans ${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`font-sans ${geistSans.variable} ${geistMono.variable} ${charm.variable} ${cookie.variable} ${merienda.variable}`}>
         <div className="min-h-screen bg-background">
           <QueryProvider>
             <NextIntlClientProvider messages={messages} locale={locale}>

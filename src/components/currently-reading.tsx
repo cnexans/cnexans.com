@@ -5,15 +5,15 @@ import Image from "next/image";
 const currentBooks = [
   {
     id: 1,
-    title: "The Art of Computer Programming, Vol. 1",
-    author: "Donald E. Knuth",
+    title: "Thinking in Systems",
+    author: "Donella Meadows",
     isbn: "9781603580557", // ISBN para obtener la portada desde Open Library
   },
   {
     id: 2,
-    title: "Gödel, Escher, Bach",
-    author: "Douglas R. Hofstadter",
-    isbn: "9780465026562", // ISBN para obtener la portada desde Open Library
+    title: "Wholeness and the Implicate Order",
+    author: "David Bohm",
+    isbn: "9781134438723", // ISBN para obtener la portada desde Open Library
   },
 ];
 

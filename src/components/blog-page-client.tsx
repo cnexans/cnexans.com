@@ -5,6 +5,7 @@ import { Search, Calendar } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { BlogPost } from "@/content/utils";
 import { LikeButton } from "./like-button";
+import { createTagColorMap } from "@/lib/utils";
 
 interface BlogPageProps {
   posts: BlogPost[];
@@ -40,22 +41,8 @@ export default function BlogPageClient({ posts, locale }: BlogPageProps) {
     count: cat === "all" ? posts.length : posts.filter(post => post.metadata.tags.includes(cat)).length
   }));
 
-  const getCategoryStyle = (tags: string[]) => {
-    if (!tags || tags.length === 0) return "bg-gray-100 text-gray-800 border-gray-200";
-    
-    const tag = tags[0].toLowerCase();
-    const styles = {
-      "computer-science": "bg-blue-100 text-blue-800 border-blue-200",
-      "mathematics": "bg-green-100 text-green-800 border-green-200",
-      "programming": "bg-purple-100 text-purple-800 border-purple-200",
-      "personal": "bg-orange-100 text-orange-800 border-orange-200",
-      "research": "bg-pink-100 text-pink-800 border-pink-200",
-      "algoritmos": "bg-blue-100 text-blue-800 border-blue-200",
-      "matemáticas": "bg-green-100 text-green-800 border-green-200",
-      "programación": "bg-purple-100 text-purple-800 border-purple-200",
-    };
-    return styles[tag as keyof typeof styles] || "bg-gray-100 text-gray-800 border-gray-200";
-  };
+  // Create the tag color mapping function
+  const getCategoryStyle = createTagColorMap(posts);
 
   return (
     <>
@@ -64,7 +51,7 @@ export default function BlogPageClient({ posts, locale }: BlogPageProps) {
         <h1 className="text-3xl font-bold text-foreground mb-4">
           {locale === 'es' ? 'Artículos' : 'Articles'}
         </h1>
-        <p className="text-muted-foreground text-lg leading-relaxed">
+        <p className="text-lg leading-relaxed">
           {locale === 'es' 
             ? 'Exploraciones sobre matemáticas, ciencias de la computación, programación y reflexiones personales.'
             : 'Explorations on mathematics, computer science, programming and personal reflections.'

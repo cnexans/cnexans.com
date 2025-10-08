@@ -4,10 +4,8 @@ import { notFound } from "next/navigation";
 
 import { CurrentlyReading } from "@/components/currently-reading";
 import { NowPlaying } from "@/components/now-playing";
-import { UnifiedComments } from "@/components/unified-comments";
-import { RealtimeVisitorCounter } from "@/components/realtime-visitor-counter";
 import { getCanonicalUrl } from "@/i18n/utils";
-import { User, BookOpen, Music } from "lucide-react";
+import { BookOpen, Music, User } from "lucide-react";
 
 export const dynamic = 'force-static'
 
@@ -46,7 +44,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         {/* About Section */}
         <section className="mb-16">
           <div className="flex items-center gap-3 mb-8">
-            <User className="text-foreground" size={24} />
+            <User className="hidden text-foreground" size={24} />
             <h1 className="text-3xl font-bold text-foreground">
               {locale === 'es' ? 'Sobre Mí' : 'About Me'}
             </h1>

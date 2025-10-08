@@ -5,6 +5,7 @@ import { Calendar } from "lucide-react";
 import { useLocale } from "next-intl";
 import { BlogPost } from "@/content/utils";
 import { LikeButton } from "./like-button";
+import { createTagColorMap } from "@/lib/utils";
 
 interface FeaturedArticlesProps {
   posts: BlogPost[];
@@ -23,22 +24,8 @@ export function FeaturedArticles({ posts }: FeaturedArticlesProps) {
     return new Intl.DateTimeFormat(locale, options).format(dateObj);
   };
 
-  const getCategoryStyle = (tags: string[]) => {
-    if (!tags || tags.length === 0) return "bg-gray-100 text-gray-800";
-    
-    const tag = tags[0].toLowerCase();
-    const styles = {
-      "computer-science": "bg-blue-100 text-blue-800",
-      "mathematics": "bg-green-100 text-green-800", 
-      "programming": "bg-purple-100 text-purple-800",
-      "personal": "bg-orange-100 text-orange-800",
-      "research": "bg-pink-100 text-pink-800",
-      "algoritmos": "bg-blue-100 text-blue-800",
-      "matemáticas": "bg-green-100 text-green-800",
-      "programación": "bg-purple-100 text-purple-800",
-    };
-    return styles[tag as keyof typeof styles] || "bg-gray-100 text-gray-800";
-  };
+  // Create the tag color mapping function
+  const getCategoryStyle = createTagColorMap(posts);
 
   return (
     <div className="space-y-6">

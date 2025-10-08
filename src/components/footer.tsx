@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
           
           {/* Copyright */}
-          <p className="text-muted-foreground text-xs text-center">
+          <p className="text-muted-foreground text-xs text-center font-sans">
             © 2025 Nexans. Hecho con curiosidad y café.
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function Footer() {
           
           {/* Second row: Copyright centered */}
           <div className="flex justify-center">
-            <p className="text-muted-foreground text-sm text-center">
+            <p className="text-muted-foreground text-sm text-center font-sans">
               © 2025 Nexans. Hecho con curiosidad y café.
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Footer() {
         {/* Desktop Layout - Everything in one row */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between">
-            <p className="text-muted-foreground text-sm">© 2025 Nexans. Hecho con curiosidad y café.</p>
+            <p className="text-muted-foreground text-sm  font-sans">© 2025 Nexans. Hecho con curiosidad y café.</p>
             <div className="flex items-center gap-4">
               <a href="https://youtube.carlosnexans.com" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="YouTube">
                 <Youtube size={20} />

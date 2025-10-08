@@ -99,22 +99,41 @@ const TrieComponent = () => {
   });
 
   const [prefix, setPrefix] = useState('');
+  const [debouncedPrefix, setDebouncedPrefix] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [diagram, setDiagram] = useState('');
   const [svg, setSvg] = useState('');
 
+  // Inicializar Mermaid solo una vez
   useEffect(() => {
-    const updateTrie = () => {
-      const diagram = trie.generateMermaidDiagram(prefix);
-      setDiagram(diagram);
-      
-      const suggestions = trie.getSuggestions(prefix);
-      setSuggestions(suggestions);
-    };
+    mermaid.initialize({ 
+      startOnLoad: false,
+      theme: 'default'
+    });
+  }, []);
 
-    updateTrie();
+  // Debounce del prefix para el diagrama
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedPrefix(prefix);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [prefix]);
+
+  // Actualizar sugerencias inmediatamente
+  useEffect(() => {
+    const suggestions = trie.getSuggestions(prefix);
+    setSuggestions(suggestions);
   }, [prefix, trie]);
 
+  // Generar diagrama solo cuando cambia el debouncedPrefix
+  useEffect(() => {
+    const diagram = trie.generateMermaidDiagram(debouncedPrefix);
+    setDiagram(diagram);
+  }, [debouncedPrefix, trie]);
+
+  // Renderizar el diagrama cuando cambia
   useEffect(() => {
     async function renderDiagram() {
       if (diagram) {

@@ -82,7 +82,7 @@ export default function BlogPageClient({ posts, locale }: BlogPageProps) {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-3 py-1 rounded-full text-sm font-medium border transition-colors ${
                   selectedCategory === category.id
-                    ? "bg-foreground text-background border-foreground"
+                    ? "bg-primary text-primary-foreground border-primary"
                     : "bg-background text-foreground border-border hover:bg-accent"
                 }`}
               >

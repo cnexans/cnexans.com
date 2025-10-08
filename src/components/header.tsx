@@ -1,6 +1,7 @@
 "use client";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -40,9 +41,10 @@ export function Header() {
             ))}
           </nav>
           
-          {/* Language Switcher */}
-          <div className="flex justify-center">
+          {/* Language Switcher and Theme Switcher */}
+          <div className="flex justify-center gap-4">
             <LanguageSwitcher />
+            <ThemeSwitcher />
           </div>
         </div>
 
@@ -67,9 +69,10 @@ export function Header() {
             </nav>
           </div>
           
-          {/* Second row: Language Switcher centered */}
-          <div className="flex justify-center">
+          {/* Second row: Language Switcher and Theme Switcher centered */}
+          <div className="flex justify-center gap-4">
             <LanguageSwitcher />
+            <ThemeSwitcher />
           </div>
         </div>
 
@@ -91,6 +94,7 @@ export function Header() {
                 </Link>
               ))}
               <LanguageSwitcher />
+              <ThemeSwitcher />
             </nav>
           </div>
         </div>

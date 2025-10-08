@@ -32,7 +32,7 @@ export function FeaturedArticles({ posts }: FeaturedArticlesProps) {
       {posts.slice(0, 3).map((post) => (
         <article key={post.metadata.slug} className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className={`${getCategoryStyle(post.metadata.tags)} px-2 py-1 rounded text-xs font-medium`}>
+            <span className={`${getCategoryStyle(post.metadata.tags)} px-2 py-1 rounded text-xs font-medium border`}>
               {post.metadata.tags?.[0] || "General"}
             </span>
             <div className="flex items-center gap-1 text-muted-foreground text-xs">

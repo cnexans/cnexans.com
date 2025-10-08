@@ -78,14 +78,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           </div>
           <NowPlaying />
         </section>
-
-        {/* Guestbook */}
-        <section className="mb-16">
-          <UnifiedComments 
-            contentId="guestbook"
-            locale={locale}
-          />
-        </section>
       </>
     );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

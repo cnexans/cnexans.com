@@ -245,6 +245,7 @@
     ul, ol {
       @apply text-lg my-4;
       @apply leading-8;
+      @apply font-serif;
     }
     
     ul {

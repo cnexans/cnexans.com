@@ -88,9 +88,7 @@ export function UnifiedComments({ contentId, locale, contentTitle }: UnifiedComm
       namePlaceholder: "Tu nombre",
       twitterPlaceholder: "@tuusuario (opcional)",
       emailPlaceholder: "tu@email.com (opcional)",
-      messagePlaceholder: contentTitle 
-        ? `Comparte tu opinión sobre "${contentTitle}"...`
-        : "Comparte tu opinión...",
+      messagePlaceholder: "Comparte tu opinión",
       send: "Enviar",
       sending: "Enviando...",
       noComments: "Sé el primero en comentar",

@@ -10,7 +10,7 @@ interface UnifiedCommentsProps {
   contentTitle?: string;
 }
 
-export function UnifiedComments({ contentId, locale, contentTitle }: UnifiedCommentsProps) {
+export function UnifiedComments({ contentId, locale }: UnifiedCommentsProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);

@@ -57,6 +57,9 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
+        'book-antiqua': ["var(--font-book-antiqua)"],
+        'palatino': ["var(--font-palatino)"],
+        'pagella': ["var(--font-pagella)"],
       },
       borderRadius: {
         lg: "var(--radius)",

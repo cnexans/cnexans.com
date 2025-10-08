@@ -137,7 +137,7 @@ export default function BlogPageClient({ posts, locale }: BlogPageProps) {
                   </Link>
                 </h2>
 
-                <p className="text-muted-foreground leading-relaxed mb-4 text-pretty">{post.metadata.description}</p>
+                <p className="text-muted-foreground leading-relaxed mb-4 text-pretty font-sans">{post.metadata.description}</p>
 
                 <div className="flex items-center justify-between">
                   <Link href={`/blog/${post.folder}`} className="text-foreground text-sm font-medium no-underline hover:text-primary transition-colors" locale={locale}>

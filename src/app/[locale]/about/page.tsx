@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { CurrentlyReading } from "@/components/currently-reading";
 import { NowPlaying } from "@/components/now-playing";
 import { UnifiedComments } from "@/components/unified-comments";
+import { RealtimeVisitorCounter } from "@/components/realtime-visitor-counter";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { User, BookOpen, Music } from "lucide-react";
 

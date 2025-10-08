@@ -60,7 +60,7 @@ export function FeaturedArticles({ posts }: FeaturedArticlesProps) {
             </Link>
           </h3>
 
-          <p className="text-muted-foreground text-sm leading-relaxed mb-4 text-pretty">
+          <p className="text-muted-foreground text-sm leading-relaxed mb-4 text-pretty font-sans">
             {post.metadata.description}
           </p>
 

@@ -41,7 +41,7 @@ const socialLinks = [
 
 export function SocialLinks() {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-2">
       {socialLinks.map((link) => {
         const Icon = link.icon;
         return (
@@ -54,8 +54,8 @@ export function SocialLinks() {
           >
             <Icon size={20} className="text-muted-foreground group-hover:text-foreground" />
             <div>
-              <h3 className="font-medium text-foreground">{link.name}</h3>
-              <p className="text-sm text-muted-foreground">{link.description}</p>
+              <h3 className="font-medium text-foreground font-sans">{link.name}</h3>
+              <p className="text-sm text-muted-foreground font-sans">{link.description}</p>
             </div>
           </a>
         );

@@ -21,7 +21,7 @@ export function Header() {
         <div className="flex flex-col space-y-4 md:hidden">
           {/* Logo */}
           <div className="flex justify-center">
-            <Link href="/" className="text-xl font-bold text-foreground no-underline" locale={locale}>
+            <Link href="/" className="text-xl font-bold text-foreground no-underline font-serif" locale={locale}>
               {"Nexans"}
             </Link>
           </div>
@@ -50,7 +50,7 @@ export function Header() {
         <div className="hidden md:block lg:hidden">
           {/* First row: Logo + Navigation */}
           <div className="flex items-center justify-between mb-4">
-            <Link href="/" className="text-xl font-bold text-foreground no-underline" locale={locale}>
+            <Link href="/" className="text-xl font-bold text-foreground no-underline font-serif" locale={locale}>
               {"Nexans"}
             </Link>
             <nav className="flex items-center gap-6">
@@ -76,7 +76,7 @@ export function Header() {
         {/* Desktop Layout - Everything in one row */}
         <div className="hidden lg:block">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-foreground no-underline" locale={locale}>
+            <Link href="/" className="text-2xl font-bold text-foreground no-underline font-serif" locale={locale}>
               {"Nexans"}
             </Link>
             <nav className="flex items-center gap-8">

@@ -7,15 +7,13 @@ const currentBooks = [
     id: 1,
     title: "The Art of Computer Programming, Vol. 1",
     author: "Donald E. Knuth",
-    isbn: "9780201896831", // ISBN para obtener la portada desde Open Library
-    thoughts: "Una obra maestra que todo programador debería estudiar. La profundidad matemática es impresionante.",
+    isbn: "9781603580557", // ISBN para obtener la portada desde Open Library
   },
   {
     id: 2,
     title: "Gödel, Escher, Bach",
     author: "Douglas R. Hofstadter",
     isbn: "9780465026562", // ISBN para obtener la portada desde Open Library
-    thoughts: "Fascinante exploración de la conciencia, la recursión y los sistemas formales.",
   },
 ];
 
@@ -44,7 +42,7 @@ export function CurrentlyReading() {
               <p className="text-muted-foreground text-sm mb-2">por {book.author}</p>
             </div>
           </div>
-          <p className="text-sm text-foreground leading-relaxed text-pretty">{book.thoughts}</p>
+          {book.thoughts && <p className="hidden lg:block text-md text-foreground leading-relaxed text-pretty">{book.thoughts}</p>}
         </div>
       ))}
     </div>

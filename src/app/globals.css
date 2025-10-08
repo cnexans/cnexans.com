@@ -3,9 +3,96 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Book Antiqua Font */
+@font-face {
+  font-family: 'Book Antiqua';
+  src: url('/fonts/book-antiqua/bookantiqua.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Book Antiqua';
+  src: url('/fonts/book-antiqua/bookantiqua_bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Palatino Linotype Font */
+@font-face {
+  font-family: 'Palatino Linotype';
+  src: url('/fonts/palatino/palatinolinotype_roman.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palatino Linotype';
+  src: url('/fonts/palatino/palatinolinotype_italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palatino Linotype';
+  src: url('/fonts/palatino/palatinolinotype_bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Palatino Linotype';
+  src: url('/fonts/palatino/palatinolinotype_bolditalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* TeX Gyre Pagella Font */
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  src: url('/fonts/tex-gyre-pagella/texgyrepagella-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  src: url('/fonts/tex-gyre-pagella/texgyrepagella-italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  src: url('/fonts/tex-gyre-pagella/texgyrepagella-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TeX Gyre Pagella';
+  src: url('/fonts/tex-gyre-pagella/texgyrepagella-bolditalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme inline {
+  --font-book-antiqua: 'Book Antiqua', serif;
+  --font-palatino: 'Palatino Linotype', serif;
+  --font-pagella: 'TeX Gyre Pagella', serif;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-pagella);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -121,6 +208,10 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 
   .markdown-content {

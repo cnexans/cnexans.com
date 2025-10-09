@@ -111,15 +111,15 @@ export function NowPlaying() {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-semibold text-foreground text-balance truncate">{trackData.track}</h3>
+            <h3 className="font-semibold text-foreground text-balance truncate font-sans">{trackData.track}</h3>
             {trackData.isPlaying && (
-              <span className="flex items-center gap-1 text-xs text-green-500 font-medium">
+              <span className="flex items-center gap-1 text-xs text-green-500 font-medium font-sans">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 En vivo
               </span>
             )}
           </div>
-          <p className="text-foreground text-sm truncate">
+          <p className="text-foreground text-sm truncate font-sans">
             {trackData.artist} • {trackData.album}
           </p>
           {trackData.progress && trackData.duration && (
@@ -130,7 +130,7 @@ export function NowPlaying() {
                   style={{ width: `${(trackData.progress / trackData.duration) * 100}%` }}
                 ></div>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-1 font-sans">
                 {formatProgress(trackData.progress, trackData.duration)}
               </p>
             </div>
@@ -143,7 +143,7 @@ export function NowPlaying() {
               href={trackData.spotifyUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-foreground hover:text-green-500 transition-colors"
+              className="text-foreground hover:text-green-500 transition-colors font-sans"
               title="Abrir en Spotify"
             >
               <ExternalLink size={20} />

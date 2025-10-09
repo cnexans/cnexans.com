@@ -8,12 +8,14 @@ const currentBooks = [
     title: "Thinking in Systems",
     author: "Donella Meadows",
     isbn: "9781603580557", // ISBN para obtener la portada desde Open Library
+    thoughts: null,
   },
   {
     id: 2,
     title: "Wholeness and the Implicate Order",
     author: "David Bohm",
     isbn: "9781134438723", // ISBN para obtener la portada desde Open Library
+    thoughts: null,
   },
 ];
 

@@ -1,0 +1,52 @@
+---
+title: "El teorema de incompletitud de Gödel"
+slug: "teorema-de-incompletitud-de-godel"
+date: "2025-10-12"
+# description: "Demostración intuitiva del teorema de Gödel y sus implicaciones"
+tags: ["Ciencias de computación"]
+---
+
+Si un alienígena desarrolla la ciencia que le permite viajar por el espacio, hasta llegar a la tierra, descubriríamos que su civilización también conocería el *Teorema de incompletitud* de Gödel. En este artículo, vamos demostrar este teorema y discutir implicaciones filosóficas importantes.
+
+Por siglos, el ser humano ha utilizado la matemática para entender el mundo físico que le rodea. Galileo Galilei en el siglo XVI decía: Las matemáticas son el lenguaje del universo. Galileo Galilei.
+
+## Demostrar es argumentar
+
+Aunque contar es una habilidad que data de hace miles de años, no fue sino hasta la antigua Grecia que se inició a la matemática como la conocemos hoy. Los griegos solían para buscar convercer o disuadir al interlocutor. Los diálogos de Platón y los fragmentos de Aristóteles son ejemplos de esto.
+
+Esta práctica influyó también en las matemáticas. Al igual que en lo debates filosóficos, ambas contrapartes establecen una base común y mientras uno argumenta a favor de una tesis, el otro busca contraargumentar. Así nacieron las demostraciones matemáticas.
+
+Veamos un ejemplo de demostración tomando el *Teorema de Pitágoras*. Dado un triángulo rectángulo, con lados a, b, c (siendo c lado opuesto al ángulo rectángulo), entonces $a^2 + b^2 = c^2$.
+
+**Estableciendo una base común**
+
+1. Noción de área: El área de un rectángulo son sus lados multiplicados, por consiguiente el área de un triángulo rectangulo es la mitad del rectángulo que se construye con sus lados.
+
+2. Noción de igualdad: Si a iguales se quitan iguales, los restos son iguales.
+
+**Prueba**
+
+1. Construye un cuadrado de lado *a + b* y dibuje los cuadrados de lado a y b adentro de él.
+
+2. Comprueba que el área de este cuadrado es $a^2 + b^2 + 2ab$
+
+3. Construya un nuevo cuadrado de lado a+b y dibuje cuatro triángulos rectos con lado a, b, c.
+
+4. Compruebe que el área de este cuadrado es $c^2 + 2ab$
+
+5. Como ambos lados son iguales, $a^2 + b^2 + 2ab = c^2 + 2ab$
+
+6. Restamos $2ab$ a ambas cantidades para obtener que $a^2 + b^2 = c^2$. Que era lo que se quería demostrar.
+
+La demostración te pide que hagas por ti mismo la comprobación, que te convenzas de que en definitiva es cierto el teorema de Pitágoras, o en su defecto, puedas mostrar un contraejemplo (un triángulo reactángulo que no cumpla lo afirmado).
+
+Esta forma de entender la matemática es deductiva, lógica. Una afirmación sólo puede ser cierta o falsa. Si es falsa, existe por lo menos un caso donde no aplica, si es cierta, lo es en todos los casos posibles.
+
+### El legado de los griegos
+
+Los teoremas que nos dejaron son cuantiosos. Euclides de Alejandría, en su obra *Elementos* recopila, en nada menos que 13 tomos, una vasta cantidad de conocimieto matemático de la época: aritmetica, geometría plana y del espacio.
+
+Para esto, organizó el saber en las nociones básicas que no necesitan demostración: definiciones y axiomas (verdades evidentes); luego escribió cada teorema con su demostración. Desde lo más simple, por ejemplo, cómo construir un triángulo equilátero, hasta lo más complejo.
+
+## La demostración como algoritmo
+

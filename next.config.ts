@@ -12,7 +12,7 @@ import remarkMath from 'remark-math';
 function generateSocialRedirects() {
   const subdomainMapping = [
     { subdomain: "meet", destination: "https://calendly.com/nexanscarlos/30min" },
-    { subdomain: "github", destination: "https://github.com/carlos-nexans" },
+    { subdomain: "github", destination: "https://github.com/cnexans" },
     { subdomain: "linkedin", destination: "https://www.linkedin.com/in/cdgn-cv/" },
     { subdomain: "x", destination: "https://x.com/techycarlos" },
     { subdomain: "youtube", destination: "https://www.youtube.com/@CarlosNexans" },

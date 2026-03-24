@@ -17,17 +17,30 @@ function generateSocialRedirects() {
     { subdomain: "x", destination: "https://x.com/techycarlos" },
     { subdomain: "youtube", destination: "https://www.youtube.com/@CarlosNexans" },
   ]
-  return subdomainMapping.map(({ subdomain, destination }) => ({
-    source: "/",
-    has: [
-      {
-        type: "host",
-        value: `${subdomain}.carlosnexans.com`,
-      },
-    ],
-    destination: destination,
-    permanent: false,
-  }))
+  return subdomainMapping.flatMap(({ subdomain, destination }) => ([
+    {
+      source: "/",
+      has: [
+        {
+          type: "host",
+          value: `${subdomain}.carlosnexans.com`,
+        },
+      ],
+      destination: destination,
+      permanent: false,
+    },
+    {
+      source: "/",
+      has: [
+        {
+          type: "host",
+          value: `${subdomain}.cnexans.com`,
+        },
+      ],
+      destination: destination,
+      permanent: false,
+    }
+  ]))
 }
 
 async function generateOldWebsiteRedirects() {

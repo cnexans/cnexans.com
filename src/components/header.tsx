@@ -60,16 +60,17 @@ export function Header() {
               {title}
             </Link>
             <nav className="flex items-center gap-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="text-sm text-foreground no-underline hover:text-primary transition-colors"
-                  locale={locale}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) =>
+                item.href ? (
+                  <a key={item.href} href={item.href} className="text-sm text-foreground no-underline hover:text-primary transition-colors">
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link key={item.path} href={item.path!} className="text-sm text-foreground no-underline hover:text-primary transition-colors" locale={locale}>
+                    {item.name}
+                  </Link>
+                )
+              )}
             </nav>
           </div>
           

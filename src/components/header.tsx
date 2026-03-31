@@ -13,6 +13,7 @@ export function Header() {
   const navItems = [
     { name: t("header.home"), path: `/` },
     { name: t("header.blog"), path: `/blog` },
+    { name: t("header.projects"), path: null, href: "https://buildinpublic.cnexans.com" },
     { name: t("header.about"), path: `/about` },
     { name: t("header.contact"), path: `/contact` },
   ];
@@ -31,16 +32,17 @@ export function Header() {
           
           {/* Navigation */}
           <nav className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className="text-sm text-foreground no-underline hover:text-primary transition-colors"
-                locale={locale}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.href ? (
+                <a key={item.href} href={item.href} className="text-sm text-foreground no-underline hover:text-primary transition-colors">
+                  {item.name}
+                </a>
+              ) : (
+                <Link key={item.path} href={item.path!} className="text-sm text-foreground no-underline hover:text-primary transition-colors" locale={locale}>
+                  {item.name}
+                </Link>
+              )
+            )}
           </nav>
           
           {/* Language Switcher and Theme Switcher */}
@@ -85,16 +87,17 @@ export function Header() {
               {title}
             </Link>
             <nav className="flex items-center gap-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="text-foreground no-underline hover:text-primary transition-colors"
-                  locale={locale}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) =>
+                item.href ? (
+                  <a key={item.href} href={item.href} className="text-foreground no-underline hover:text-primary transition-colors">
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link key={item.path} href={item.path!} className="text-foreground no-underline hover:text-primary transition-colors" locale={locale}>
+                    {item.name}
+                  </Link>
+                )
+              )}
               <LanguageSwitcher />
               <ThemeSwitcher />
             </nav>

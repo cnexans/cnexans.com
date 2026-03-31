@@ -3,7 +3,8 @@
         "home": "Inicio",
         "blog": "Blog",
         "about": "Sobre Mí",
-        "contact": "Contacto"
+        "contact": "Contacto",
+        "projects": "Mis Proyectos"
     }, 
     "home": {
         "latestPosts": "Últimos Artículos"

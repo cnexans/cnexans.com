@@ -24,17 +24,13 @@ export interface CreateContactData {
  */
 export async function submitContact(
   contactData: CreateContactData
-): Promise<Contact> {
-  const { data, error } = await supabase
+): Promise<void> {
+  const { error } = await supabase
     .from('contacts')
-    .insert([contactData])
-    .select()
-    .single();
+    .insert([contactData]);
 
   if (error) {
     console.error('Error submitting contact:', error);
     throw error;
   }
-
-  return data;
 }

@@ -52,19 +52,15 @@ export async function getComments(
  */
 export async function addComment(
   commentData: CreateCommentData
-): Promise<Comment> {
-  const { data, error } = await supabase
+): Promise<void> {
+  const { error } = await supabase
     .from('comments')
-    .insert([commentData])
-    .select()
-    .single();
+    .insert([commentData]);
 
   if (error) {
     console.error('Error adding comment:', error);
     throw error;
   }
-
-  return data;
 }
 
 /**

@@ -1,0 +1,152 @@
+---
+title: "Las Geometrías No Euclidianas"
+slug: "las-geometrias-no-euclidianas"
+date: "2026-03-04"
+description: "Del quinto postulado y la geometría absoluta a las geometrías euclídea, hiperbólica y elíptica: axiomas de Hilbert, alternativas a las paralelas, curvatura y modelos del plano hiperbólico."
+tags: ["Matemática"]
+toc: true
+tocDepth: 2
+---
+
+## Contexto histórico
+
+Durante más de dos mil años, los matemáticos creyeron que la geometría de Euclides —tal como fue expuesta en sus *Elementos* (siglo III a.C.)— era la única geometría posible y una descripción verdadera del espacio físico. Su sistema se fundaba en cinco postulados considerados evidentes por sí mismos.
+
+Sin embargo, el **quinto postulado**, conocido como el *postulado de las paralelas*, resultaba notablemente más complejo que los otros cuatro. En su formulación equivalente moderna (debida a John Playfair, 1795):
+
+> *"Por un punto exterior a una recta dada, pasa una y solo una recta paralela a la dada."*
+
+Su formulación original en Euclides es aún más elaborada, lo que despertó sospechas: ¿era realmente un axioma, o podía deducirse de los otros cuatro? Durante siglos, matemáticos intentaron demostrarlo sin éxito. Fue en el siglo XIX cuando Gauss, Bolyai y Lobachevski comprendieron —de forma independiente— que **negar el quinto postulado no genera una contradicción**, sino una geometría distinta y completamente válida.
+
+Esto condujo a la distinción fundamental entre:
+
+- La **geometría absoluta**: la parte que se puede desarrollar sin asumir nada sobre las paralelas.
+- Las **geometrías no euclidianas**: las que adoptan una alternativa al quinto postulado.
+
+## Geometría absoluta
+
+La **geometría absoluta** (también llamada geometría neutral) es el sistema que resulta de aceptar los primeros cuatro grupos de axiomas de Hilbert, **excluyendo** el axioma de las paralelas. Es el núcleo común a la geometría euclídea y a las geometrías no euclidianas.
+
+### Axiomas de base
+
+Los axiomas se agrupan en cuatro categorías (Ivorra, 2024, p. 1):
+
+<div className="overflow-x-auto my-4">
+
+| Grupo | Nombre | Qué establece |
+|-------|--------|---------------|
+| **A** | Axiomas de incidencia | Existencia y unicidad de rectas por dos puntos; relación entre puntos, rectas y planos |
+| **B** | Axiomas de ordenación | Noción de "estar entre"; existencia de puntos intermedios |
+| **C** | Axiomas de congruencia | Igualdad de segmentos y ángulos; criterios de congruencia de triángulos |
+| **D** | Axioma de Arquímedes | Todo segmento puede ser superado por múltiplos de otro segmento |
+
+</div>
+
+### Resultados válidos en geometría absoluta
+
+En la geometría absoluta se pueden demostrar resultados importantes sin necesidad del axioma de las paralelas, entre ellos:
+
+- El **ángulo externo** de un triángulo es mayor que cualquiera de los ángulos internos no adyacentes.
+- Dado un punto $P$ exterior a una recta $r$, **existe al menos una recta** paralela a $r$ que pasa por $P$.
+- La **suma de los ángulos interiores** de cualquier triángulo satisface:
+$$\alpha + \beta + \gamma \leq 180°$$
+
+El caso de igualdad ($= 180°$) equivale al axioma de las paralelas (geometría euclídea); el caso de desigualdad estricta ($\lt 180°$) corresponde a la geometría hiperbólica.
+
+### Lo que no se puede demostrar sin el quinto postulado
+
+Sin el axioma de las paralelas, no se puede demostrar:
+
+- Que la paralela por un punto sea **única**.
+- El **Teorema de Pitágoras**: $a^2 + b^2 = c^2$.
+- La existencia de rectángulos o figuras con cuatro ángulos rectos.
+- Que la suma de los ángulos de un triángulo sea exactamente $180°$.
+
+## El axioma de las paralelas y sus alternativas
+
+El axioma **E** (de las paralelas) en su formulación moderna establece (Ivorra, 2024, p. 72):
+
+| Axioma | Qué establece |
+|--------|---------------|
+| **E (Euclídeo)** | Por un punto $P \notin r$ pasa exactamente **1** recta paralela a $r$. |
+
+Al adoptar este axioma se obtiene la **geometría euclídea**, la geometría clásica con las siguientes propiedades:
+
+- La suma de los ángulos interiores de todo triángulo es exactamente $\alpha + \beta + \gamma = 180°$.
+- El **Teorema de Pitágoras** es válido: $a^2 + b^2 = c^2$.
+- La **curvatura** del plano es nula: $K = 0$.
+- Las rectas paralelas mantienen distancia constante entre sí.
+
+Sin embargo, esta no es la única elección posible. Las tres grandes geometrías planas se distinguen precisamente por qué versión del axioma de las paralelas adoptan:
+
+| Geometría | Paralelas por un punto exterior |
+|-----------|--------------------------------|
+| Euclídea | Existe exactamente una recta paralela |
+| Hiperbólica | Existen infinitas rectas paralelas |
+| Elíptica | No existe ninguna recta paralela |
+
+Negar o modificar el axioma E no genera contradicción alguna, sino geometrías distintas y completamente válidas, que exploramos a continuación.
+
+## Geometría hiperbólica
+
+La geometría hiperbólica fue desarrollada de forma independiente por **Gauss** (no publicada), **Bolyai** (1832) y **Lobachevski** (1830). Reemplaza el axioma de las paralelas por su opuesto: por un punto exterior a una recta pasan **infinitas** rectas que no la cortan. Es la geometría no euclídea más próxima a la euclídea: satisface todos los axiomas de Hilbert salvo el de las paralelas (Ivorra, 2024, p. 423).
+
+Para visualizarla se usa el **disco de Poincaré** (Ivorra, 2024, p. 439): el plano hiperbólico completo cabe en el interior de un disco. Los puntos son los del interior; el borde del disco es inalcanzable (representa el "infinito"). Las rectas hiperbólicas son los diámetros del disco y los arcos que cruzan el borde en ángulo recto. Las paralelas por un punto $P$ a una recta $r$ son todos los arcos que pasan por $P$ y no llegan a tocar $r$: hay infinitas. En particular, existen exactamente **2 horoparalelas** (las geodésicas que pasan justo por los puntos ideales $\omega_1$ y $\omega_2$ donde $r$ toca el borde del disco) e **infinitas ultraparalelas** (las que van a puntos del borde estrictamente entre $\omega_1$ y $\omega_2$).
+
+<img src="/non-euclidean-geometries/poincare_paralelas.png" alt="Infinitas paralelas por un punto en geometría hiperbólica" style={{maxWidth: "320px", width: "100%", display: "block", margin: "1.5rem auto"}} />
+
+### Lo que cambia respecto a la geometría euclídea
+
+La consecuencia más visible es que la suma de los ángulos de cualquier triángulo es **menor que $180°$**. Cuanto más grande es el triángulo, más se aleja la suma de $180°$. Esto lleva al teorema más sorprendente de esta geometría: **dos triángulos con los mismos tres ángulos son necesariamente del mismo tamaño** (Ivorra, 2024, p. 433). En la geometría euclídea podemos tener triángulos semejantes (mismos ángulos, distinto tamaño); en la hiperbólica eso es imposible. Los ángulos determinan completamente la figura.
+
+<img src="/non-euclidean-geometries/poincare_triangulo.png" alt="Triángulo hiperbólico con suma de ángulos menor que 180°" style={{maxWidth: "320px", width: "100%", display: "block", margin: "1.5rem auto"}} />
+
+## Geometría elíptica
+
+La geometría elíptica adopta el extremo opuesto a la hiperbólica: por un punto exterior a una recta **no pasa ninguna paralela**. El modelo más intuitivo es la superficie de una esfera, donde los "puntos" son pares de puntos antipodales y las "rectas" son los círculos máximos (el ecuador, los meridianos). En esa superficie, cualquier dos líneas rectas terminan encontrándose, igual que todos los meridianos se juntan en los polos sin importar con qué ángulo salieron del ecuador (Ivorra, 2024, p. 459).
+
+<img src="/non-euclidean-geometries/sphere.png" alt="Triángulo esférico con suma de ángulos 270°" style={{width: "100%", display: "block", margin: "1.5rem auto"}} />
+
+La consecuencia más visible es que la suma de los ángulos de cualquier triángulo es **mayor que $180°$**. Un triángulo dibujado sobre la esfera con un vértice en el polo norte y los otros dos en el ecuador puede tener perfectamente tres ángulos rectos: suma $270°$.
+
+### Lo que cambia respecto a la geometría euclídea
+
+El teorema más contraintuitivo es este: **dos rectas que salen perpendiculares a una misma recta no son paralelas, se encuentran** (Ivorra, 2024, p. 462). En la geometría euclídea eso garantizaría que son paralelas; en la elíptica es exactamente lo que hacen los meridianos respecto al ecuador. No existen rectángulos, no existen rectas paralelas, y el plano no tiene "infinito": es finito pero sin bordes, como la superficie de una esfera.
+
+## Comparación de las tres geometrías
+
+<img src="/non-euclidean-geometries/comparison.png" alt="Comparación de triángulos en las tres geometrías" style={{width: "100%", display: "block", margin: "1.5rem auto"}} />
+
+<div className="overflow-x-auto my-4">
+
+| Propiedad | Euclídea | Hiperbólica | Elíptica |
+|-----------|----------|-------------|----------|
+| Paralelas por un punto exterior | 1 | Infinitas | Ninguna |
+| Suma de ángulos del triángulo | $= 180°$ | $\lt 180°$ | $\gt 180°$ |
+| Curvatura $K$ | $0$ | $\lt 0$ | $\gt 0$ |
+| Rectas paralelas | Equidistantes | Divergen | No existen |
+| Teorema de Pitágoras | Válido | No válido | No válido |
+| Rectas | Infinitas, abiertas | Infinitas, abiertas | Cerradas (finitas) |
+| Geometría absoluta incluida | Sí | Sí | No (viola axioma B) |
+
+</div>
+
+## Relevancia e impacto
+
+El descubrimiento de las geometrías no euclidianas fue uno de los mayores cambios de paradigma en la historia de la matemática, con consecuencias que van mucho más allá de la geometría pura:
+
+**En matemática:** Demostró que un sistema axiomático puede ser *consistente* aunque contradiga la intuición, y que la elección de axiomas no es única ni "verdadera" en sentido absoluto.
+
+**En física:** La **Teoría General de la Relatividad** de Einstein (1915) describe el espacio-tiempo como una variedad curva no euclídea. La gravedad no es una fuerza, sino la curvatura del espacio-tiempo, descrita por ecuaciones de la geometría diferencial de Riemann (curvatura positiva, negativa o nula según la distribución de masa-energía).
+
+**En topología:** Las geometrías de curvatura constante son los tres modelos fundamentales de superficies: el plano euclídeo ($K=0$), la esfera ($K>0$) y el plano hiperbólico ($K<0$).
+
+## Conclusión
+
+La geometría absoluta constituye el **núcleo lógico común** a toda geometría plana: es lo que puede afirmarse sin asumir nada sobre las paralelas. A partir de ella, la elección de un axioma sobre las paralelas define tres mundos geométricos distintos, cada uno internamente consistente.
+
+La geometría euclídea, válida durante milenios como descripción del espacio, resulta ser apenas un caso particular —el de curvatura nula— dentro de un espectro mucho más rico. Las geometrías hiperbólica y elíptica no son curiosidades matemáticas: son herramientas indispensables para entender el universo físico real.
+
+## Referencias
+
+Ivorra Castillo, C. (2024). *Geometría* (3.ª ed.). Universidad de Valencia.

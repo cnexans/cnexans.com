@@ -252,11 +252,11 @@
     }
     
     ul {
-      @apply list-disc pl-4;
+      @apply list-disc pl-6;
     }
-    
+
     ol {
-      @apply list-decimal pl-4;
+      @apply list-decimal pl-6;
     }
     
     blockquote {

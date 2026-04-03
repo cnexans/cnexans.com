@@ -52,14 +52,13 @@ export function Header() {
           </div>
         </div>
 
-        {/* Tablet Layout - Logo + Nav in one row, Language in second row */}
+        {/* Tablet Layout - Everything in one row */}
         <div className="hidden md:block lg:hidden">
-          {/* First row: Logo + Navigation */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <Link href="/" className="text-xl font-bold text-foreground no-underline font-merienda" locale={locale}>
               {title}
             </Link>
-            <nav className="flex items-center gap-6">
+            <nav className="flex items-center gap-4">
               {navItems.map((item) =>
                 item.href ? (
                   <a key={item.href} href={item.href} className="text-sm text-foreground no-underline hover:text-primary transition-colors">
@@ -71,13 +70,9 @@ export function Header() {
                   </Link>
                 )
               )}
+              <LanguageSwitcher />
+              <ThemeSwitcher />
             </nav>
-          </div>
-          
-          {/* Second row: Language Switcher and Theme Switcher centered */}
-          <div className="flex justify-center gap-4">
-            <LanguageSwitcher />
-            <ThemeSwitcher />
           </div>
         </div>
 

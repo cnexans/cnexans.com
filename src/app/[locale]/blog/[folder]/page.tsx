@@ -1,10 +1,11 @@
-import { getBlogPosts } from "@/content/utils";
+import { getBlogPosts, extractHeadings } from "@/content/utils";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { baseUrl } from "@/app/sitemap";
 import { getCanonicalUrl } from "@/i18n/utils";
 import { UnifiedComments } from "@/components/unified-comments";
+import { TableOfContents } from "@/components/table-of-contents";
 import { Calendar, Clock, Tag } from "lucide-react";
 import { LikeButton } from "@/components/like-button";
 
@@ -158,6 +159,12 @@ export default async function Page({
 
         {/* Article Content */}
         <div className="markdown-content">
+          {post.metadata.toc && (
+            <TableOfContents
+              headings={extractHeadings(post.content, post.metadata.tocDepth ?? 3)}
+              locale={locale}
+            />
+          )}
           <Content />
         </div>
 

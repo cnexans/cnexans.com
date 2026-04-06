@@ -1,0 +1,99 @@
+---
+title: "El teorema de incompletitud de Gödel"
+slug: "teorema-de-incompletitud-de-godel"
+date: "2025-10-12"
+description: "En este artículo se demuestra el teorema de Gödel, se explora como surge históricamente y sus implicancias filosóficas"
+tags: ["Ciencias de computación"]
+---
+
+<span className="hidden">Si un alienígena desarrolla la ciencia que le permite viajar por el espacio, hasta llegar a la tierra, descubriríamos que su civilización también conocería el *Teorema de incompletitud* de Gödel. En este artículo, vamos demostrar este teorema y discutir implicaciones filosóficas importantes.</span>
+
+Por siglos, el ser humano ha utilizado la matemática para entender el mundo físico que le rodea. Galileo Galilei en el siglo XVI decía: Las matemáticas son el lenguaje del universo.
+
+## Dialéctica
+
+Aunque contar es una habilidad que data de hace miles de años, no fue sino hasta la antigua Grecia que se inició a la matemática como la conocemos hoy. Los griegos solían para buscar convercer o disuadir al interlocutor. Los diálogos de Platón y los fragmentos de Aristóteles son ejemplos de esto.
+
+Esta práctica influyó también en las matemáticas. Al igual que en lo debates filosóficos, ambas contrapartes establecen una base común y mientras uno argumenta a favor de una tesis, el otro busca contraargumentar. Así nacieron las demostraciones matemáticas.
+
+Veamos un ejemplo de demostración tomando el *Teorema de Pitágoras*.
+
+> Dado un triángulo rectángulo, con lados a, b, c (siendo c lado opuesto al ángulo rectángulo), entonces se cumple que $a^2 + b^2 = c^2$.
+
+**Estableciendo una base común**
+
+1. Noción de área: El área de un rectángulo son sus lados multiplicados, por consiguiente el área de un triángulo rectangulo es la mitad del rectángulo que se construye con sus lados.
+
+2. Noción de igualdad: Si a iguales se quitan iguales, los restos son iguales.
+
+**Prueba**
+
+1. Construye un cuadrado de lado *a + b* y dibuje los cuadrados de lado a y b adentro de él.
+
+2. Comprueba que el área de este cuadrado es $a^2 + b^2 + 2ab$
+
+3. Construya un nuevo cuadrado de lado a+b y dibuje cuatro triángulos rectos con lado a, b, c.
+
+4. Compruebe que el área de este cuadrado es $c^2 + 2ab$
+
+5. Como ambos lados son iguales, $a^2 + b^2 + 2ab = c^2 + 2ab$
+
+6. Restamos $2ab$ a ambas cantidades para obtener que $a^2 + b^2 = c^2$. Que era lo que se quería demostrar.
+
+La demostración te pide que hagas por ti mismo la comprobación, que te convenzas de que en definitiva es cierto el teorema de Pitágoras, o en su defecto, puedas mostrar un contraejemplo (un triángulo reactángulo que no cumpla lo afirmado).
+
+Esta forma de entender la matemática es deductiva, lógica. Una afirmación sólo puede ser cierta o falsa. Si es falsa, existe por lo menos un caso donde no aplica, si es cierta, lo es en todos los casos posibles.
+
+El legado de los griegos es cuantioso. Euclides de Alejandría, en su obra *Elementos* recopila, en nada menos que 13 tomos, una vasta cantidad de conocimieto matemático de la época: aritmetica, geometría plana y del espacio.
+
+Para esto, organizó el saber en las nociones básicas que no necesitan demostración: definiciones y axiomas (verdades evidentes); luego escribió cada teorema con su demostración. Desde lo más simple, por ejemplo, cómo construir un triángulo equilátero, hasta lo más complejo.
+
+## Algoritmos y poesía
+
+Como vimos, una demostración también contiene a un proceso de *comprobación*, el cual tiene una cantidad razonable de pasos bien definidos. Esta descripción coincide con la de un *algoritmo*. La forma en la que se resumen y verbalizan los pasos de la demostración también es una parte clave. 
+
+> La raíz cuadrada de la mitad del número de abejas en un enjambre
+ha volado hasta la planta de jazmín.
+Ocho novenos del enjambre atrás quedaron.
+Una abeja vuela junto a su compañera que zumba dentro de la flor de loto;
+en la noche, atraída por el dulce aroma de la flor, voló a su interior
+¡y ahora está atrapada!
+Dime, encantadora dama, el número de abejas en el enjambre.
+Bhaskara
+
+Si este teorema te es ajeno, no es porque no lo hayas estudiado, sino porque el lenguaje en el que se expresa es muy distinto al que usamos ahora.
+
+> Las soluciones a la ecuación $ax^2 + bx + c = 0$, si existen, están dadas por $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+**Demostración**
+
+1. Partimos de la ecuación cuadrática general: $$ax^2 + bx + c = 0$$. Donde $a \neq 0$.
+
+2. Multiplica por $4a$ para obtener
+
+    $$4a^2x^2 + 4abx + 4ac = 0$$.
+
+2. Suma $b^2$ a ambos lados reordena:
+
+    $$b^2 + 4a^2x^2 + 4abx + 4ac = b^2$$
+
+3. Reordena los términos:
+
+    $$4a^2x^2 + 4abx + b^2 = b^2 - 4ac$$
+
+4. Factoriza por trinomio cuadrado perfecto.
+
+$$(2ax + b)^2 = b^2 - 4ac$$
+
+5. Aplica raíz cuadrada a ambos lados.
+
+    $$2ax + b = \pm\sqrt{b^2 - 4ac}$$
+
+6. Resta $b$.
+
+    $$2ax = -b \pm \sqrt{b^2 - 4ac}$$
+
+7. Divide entre $2a$ (posible porque $a \neq 0$):
+
+    $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+El proceso de demostración muestra una serie de pasos bien concretos y finitos (sumar, restar, sacar raíces), por lo que, en el fondo, además de ser una verdad lógica, es un algoritmo.

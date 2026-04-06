@@ -224,20 +224,20 @@
     }
     
     h2 {
-      @apply text-2xl font-bold my-4;
+      @apply text-3xl font-bold my-4;
       @apply mt-8;
     }
     
     h3 {
-      @apply text-lg font-bold;
+      @apply text-2xl font-bold;
     }
     
     h4 {
-      @apply text-base font-bold;
+      @apply text-lg font-bold;
     }
     
     h5 {
-      @apply text-sm font-bold;
+      @apply text-base font-bold;
     }
     
     p {

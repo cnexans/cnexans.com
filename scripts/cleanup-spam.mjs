@@ -1,6 +1,7 @@
-// Deletes spam from the Supabase `contacts` and `comments` tables.
+// Flags spam in the Supabase `contacts` and `comments` tables
+// (is_spam = true + spam_reason). Rows are never deleted.
 //
-// Signals (any one is enough to delete):
+// Signals (any one is enough to flag):
 //   - malformed email
 //   - email domain that can't receive mail (no MX / null MX)
 //   - disposable email domain (github.com/disposable-email-domains)
@@ -13,6 +14,7 @@
 // Logs are public (public repo): only ids, masked emails and reasons are printed.
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, DRY_RUN=true to only report.
+// Schema: cnexans/master-sideproject-supabase, migration 20261001170000_spam_flags.
 
 import { resolveMx } from "node:dns/promises";
 
@@ -138,6 +140,10 @@ async function cleanTable({ table, select, filter, fields, texts }) {
 
   for (const row of rows) {
     const key = JSON.stringify(texts(row).map((t) => (t || "").trim().toLowerCase()));
+    if (row.is_spam) {
+      seen.add(key);
+      continue;
+    }
     const reasons = [
       ...(seen.has(key) ? ["duplicate"] : []),
       ...contentReasons(fields(row), texts(row)),
@@ -147,12 +153,18 @@ async function cleanTable({ table, select, filter, fields, texts }) {
     if (reasons.length) spam.push({ id: row.id, email: row.email, reasons });
   }
 
-  console.log(`\n${table}: ${spam.length} spam of ${rows.length} checked`);
+  const checked = rows.filter((r) => !r.is_spam).length;
+  console.log(`\n${table}: ${spam.length} new spam of ${checked} unflagged rows`);
   for (const s of spam) console.log(`  #${s.id} ${mask(s.email)} — ${s.reasons.join(", ")}`);
 
-  if (!DRY_RUN && spam.length) {
-    await db(`${table}?id=in.(${spam.map((s) => s.id).join(",")})`, { method: "DELETE" });
-    console.log(`  deleted ${spam.length}`);
+  if (!DRY_RUN) {
+    for (const s of spam) {
+      await db(`${table}?id=eq.${s.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ is_spam: true, spam_reason: s.reasons.join(", ") }),
+      });
+    }
+    if (spam.length) console.log(`  flagged ${spam.length}`);
   }
   return spam.length;
 }
@@ -160,17 +172,17 @@ async function cleanTable({ table, select, filter, fields, texts }) {
 const total =
   (await cleanTable({
     table: "contacts",
-    select: "id,email,subject,message",
+    select: "id,email,subject,message,is_spam",
     filter: "response_sent=eq.false",
     fields: (r) => [r.subject, r.message],
     texts: (r) => [r.email, r.subject, r.message],
   })) +
   (await cleanTable({
     table: "comments",
-    select: "id,email,name,message,twitter",
+    select: "id,email,name,message,twitter,is_spam",
     filter: "is_visible=eq.false",
     fields: (r) => [r.name, r.message],
     texts: (r) => [r.name, r.message, r.twitter],
   }));
 
-console.log(`\n${DRY_RUN ? "[dry run] would delete" : "deleted"} ${total} rows`);
+console.log(`\n${DRY_RUN ? "[dry run] would flag" : "flagged"} ${total} rows as spam`);

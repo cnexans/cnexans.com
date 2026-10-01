@@ -1,0 +1,26 @@
+name: Cleanup spam
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily, 03:00 Buenos Aires
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only report, don't delete"
+        type: boolean
+        default: true
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/cleanup-spam.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}

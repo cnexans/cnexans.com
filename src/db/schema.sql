@@ -1,4 +1,10 @@
 -- ============================================
+-- OUTDATED — DO NOT EDIT OR APPLY.
+-- The real schema lives in the private repo cnexans/master-sideproject-supabase
+-- (supabase/migrations/). See .claude/skills/supabase-schema/SKILL.md.
+-- ============================================
+
+-- ============================================
 -- Database Schema for Carlos Nexans Blog
 -- ============================================
 -- Complete schema without RLS complexity

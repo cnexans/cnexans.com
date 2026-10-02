@@ -140,7 +140,8 @@ async function cleanTable({ table, select, filter, fields, texts }) {
 
   for (const row of rows) {
     const key = JSON.stringify(texts(row).map((t) => (t || "").trim().toLowerCase()));
-    if (row.is_spam) {
+    // Already flagged, or reviewed by hand in the panel ("not spam (manual)")
+    if (row.is_spam || row.spam_reason) {
       seen.add(key);
       continue;
     }
@@ -153,7 +154,7 @@ async function cleanTable({ table, select, filter, fields, texts }) {
     if (reasons.length) spam.push({ id: row.id, email: row.email, reasons });
   }
 
-  const checked = rows.filter((r) => !r.is_spam).length;
+  const checked = rows.filter((r) => !r.is_spam && !r.spam_reason).length;
   console.log(`\n${table}: ${spam.length} new spam of ${checked} unflagged rows`);
   for (const s of spam) console.log(`  #${s.id} ${mask(s.email)} — ${s.reasons.join(", ")}`);
 
@@ -172,14 +173,14 @@ async function cleanTable({ table, select, filter, fields, texts }) {
 const total =
   (await cleanTable({
     table: "contacts",
-    select: "id,email,subject,message,is_spam",
+    select: "id,email,subject,message,is_spam,spam_reason",
     filter: "response_sent=eq.false",
     fields: (r) => [r.subject, r.message],
     texts: (r) => [r.email, r.subject, r.message],
   })) +
   (await cleanTable({
     table: "comments",
-    select: "id,email,name,message,twitter,is_spam",
+    select: "id,email,name,message,twitter,is_spam,spam_reason",
     filter: "is_visible=eq.false",
     fields: (r) => [r.name, r.message],
     texts: (r) => [r.name, r.message, r.twitter],

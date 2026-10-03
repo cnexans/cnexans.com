@@ -1,13 +1,6 @@
 import { supabase } from './supabase';
 
-export interface PostLike {
-  id: number;
-  content_id: string;
-  user_id: string;
-  created_at: string;
-}
-
-export interface ToggleLikeResponse {
+export interface LikeResponse {
   liked: boolean;
   count: number;
 }
@@ -63,91 +56,32 @@ export async function getPostLikeCount(contentId: string): Promise<number> {
 }
 
 /**
- * Check if the current user has liked a post
+ * Like a post as the current user. Likes can't be removed: the database only
+ * allows reading counts and adding likes (see .claude/skills/supabase-schema).
  */
-export async function hasUserLikedPost(
-  contentId: string,
-  userId: string
-): Promise<boolean> {
-  const { data, error } = await supabase
-    .rpc('has_user_liked_post', {
-      p_content_id: contentId,
-      p_user_id: userId,
-    });
+export async function likePost(contentId: string): Promise<LikeResponse | null> {
+  const { data, error } = await supabase.rpc('like_post', {
+    p_content_id: contentId,
+  });
 
   if (error) {
-    console.error('Error checking if user liked post:', error);
-    return false;
-  }
-
-  return data || false;
-}
-
-/**
- * Toggle like for a post (add if not liked, remove if already liked)
- */
-export async function togglePostLike(
-  contentId: string,
-  userId: string
-): Promise<ToggleLikeResponse | null> {
-  const { data, error } = await supabase
-    .rpc('toggle_post_like', {
-      p_content_id: contentId,
-      p_user_id: userId,
-    });
-
-  if (error) {
-    console.error('Error toggling post like:', error);
+    console.error('Error liking post:', error);
     return null;
   }
 
-  return data as ToggleLikeResponse;
+  return data as LikeResponse;
 }
 
 /**
- * Get all content IDs that a user has liked
+ * Get all content IDs the current user has liked
  */
-export async function getUserLikedPosts(
-  userId: string
-): Promise<string[]> {
-  const { data, error } = await supabase
-    .rpc('get_user_liked_posts', {
-      p_user_id: userId,
-    });
+export async function getMyLikedPosts(): Promise<string[]> {
+  const { data, error } = await supabase.rpc('get_my_liked_posts');
 
   if (error) {
-    console.error('Error getting user liked posts:', error);
+    console.error('Error getting liked posts:', error);
     return [];
   }
 
   return data.map((row: { content_id: string }) => row.content_id);
-}
-
-/**
- * Get like counts for multiple posts at once
- */
-export async function getMultiplePostLikeCounts(
-  contentIds: string[]
-): Promise<Record<string, number>> {
-  const { data, error } = await supabase
-    .from('post_likes')
-    .select('content_id')
-    .in('content_id', contentIds);
-
-  if (error) {
-    console.error('Error getting multiple post like counts:', error);
-    return {};
-  }
-
-  // Count likes per content_id
-  const counts: Record<string, number> = {};
-  contentIds.forEach((id) => {
-    counts[id] = 0;
-  });
-  
-  data.forEach((row) => {
-    counts[row.content_id] = (counts[row.content_id] || 0) + 1;
-  });
-
-  return counts;
 }

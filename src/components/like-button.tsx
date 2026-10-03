@@ -17,7 +17,7 @@ export function LikeButton({
   showCount = true, 
   className 
 }: LikeButtonProps) {
-  const { toggleLike, getLikeCount, isLiked, isLoading } = usePostLikes();
+  const { like, getLikeCount, isLiked, isLoading } = usePostLikes();
   
   const liked = isLiked(postSlug);
   const likeCount = getLikeCount(postSlug);
@@ -36,15 +36,17 @@ export function LikeButton({
 
   return (
     <button
-      onClick={() => toggleLike(postSlug)}
-      disabled={isLoading}
+      onClick={() => like(postSlug)}
+      disabled={isLoading || liked}
       className={cn(
         "flex items-center gap-1 transition-all duration-200 group",
         "active:scale-95",
         isLoading && "opacity-50 cursor-not-allowed",
+        liked && "cursor-default active:scale-100",
         className
       )}
-      aria-label={liked ? "Quitar me gusta" : "Me gusta"}
+      aria-label={liked ? "Te gusta" : "Me gusta"}
+      aria-pressed={liked}
       title={isLoading ? "Loading..." : undefined}
     >
       <Heart 

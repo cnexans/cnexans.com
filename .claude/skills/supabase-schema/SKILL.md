@@ -36,4 +36,5 @@ database, so every change goes through a migration in that repo.
 |---|---|
 | `contacts` | Contact form inserts `email, subject, message, locale` with the anon key (`return=minimal`). Everything else (`/admin` panel, `scripts/cleanup-spam.mjs`) uses `SUPABASE_SERVICE_ROLE_KEY` server-side only. |
 | `comments` | Anon inserts; anon reads only `is_visible = true`. Spam job flags with `is_spam`. |
-| `post_likes` | Through the `toggle_post_like` / `get_post_like_count` RPCs with anonymous auth. |
+| `post_likes` | No direct table access. Visitors (signed in anonymously) only call `get_post_like_count`, `like_post` (insert-only, uses `auth.uid()`) and `get_my_liked_posts`. Likes can't be removed through the Data API. |
+| `spotify_*` | Spotify now-playing widget (`~/Projects/spotify-now-playing-widget`, nowplayingwidget.vercel.app). This site only calls its public `/api/now-playing/<user-id>` endpoint. |

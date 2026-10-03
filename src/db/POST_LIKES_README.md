@@ -1,3 +1,5 @@
+> **OUTDATED.** Likes are now insert-only: the site uses `like_post` and `get_my_liked_posts`, and visitors can't remove likes. See `.claude/skills/supabase-schema/SKILL.md` and migration `20261003140000_post_likes_lockdown` in cnexans/master-sideproject-supabase.
+
 # Post Likes Functionality
 
 ## Overview

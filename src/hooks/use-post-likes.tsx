@@ -3,15 +3,15 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   getPostLikeCount,
-  getUserLikedPosts,
-  togglePostLike as togglePostLikeAPI,
+  getMyLikedPosts,
+  likePost,
   ensureAuthenticatedUser,
 } from "@/lib/post-likes";
 
 export function usePostLikes() {
   const [likes, setLikes] = useState<Record<string, number>>({});
   const [userLikes, setUserLikes] = useState<Set<string>>(new Set());
-  const [userId, setUserId] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Initialize user (sign in anonymously if needed) and load user's liked posts
@@ -25,10 +25,10 @@ export function usePostLikes() {
         return;
       }
       
-      setUserId(id);
+      setIsAuthenticated(true);
 
       // Load user's liked posts from Supabase
-      const likedPosts = await getUserLikedPosts(id);
+      const likedPosts = await getMyLikedPosts();
       setUserLikes(new Set(likedPosts));
       setIsLoading(false);
     };
@@ -47,64 +47,28 @@ export function usePostLikes() {
     }));
   }, [likes]);
 
-  const toggleLike = useCallback(async (contentId: string) => {
-    if (!userId || isLoading) return;
+  // Likes can only be added, never removed
+  const like = useCallback(async (contentId: string) => {
+    if (!isAuthenticated || isLoading || userLikes.has(contentId)) return;
 
-    const wasLiked = userLikes.has(contentId);
-    
     // Optimistic update
-    setUserLikes((prev) => {
-      const newSet = new Set(prev);
-      if (wasLiked) {
-        newSet.delete(contentId);
-      } else {
-        newSet.add(contentId);
-      }
-      return newSet;
-    });
-    
-    setLikes((prev) => ({
-      ...prev,
-      [contentId]: Math.max((prev[contentId] || 0) + (wasLiked ? -1 : 1), 0),
-    }));
+    setUserLikes((prev) => new Set(prev).add(contentId));
+    setLikes((prev) => ({ ...prev, [contentId]: (prev[contentId] || 0) + 1 }));
 
-    // Call API to toggle like
-    const result = await togglePostLikeAPI(contentId, userId);
-    
+    const result = await likePost(contentId);
+
     if (result) {
-      // Update with the server response
-      setLikes((prev) => ({
-        ...prev,
-        [contentId]: result.count,
-      }));
-      
-      setUserLikes((prev) => {
-        const newSet = new Set(prev);
-        if (result.liked) {
-          newSet.add(contentId);
-        } else {
-          newSet.delete(contentId);
-        }
-        return newSet;
-      });
+      setLikes((prev) => ({ ...prev, [contentId]: result.count }));
     } else {
       // Revert optimistic update on error
       setUserLikes((prev) => {
         const newSet = new Set(prev);
-        if (wasLiked) {
-          newSet.add(contentId);
-        } else {
-          newSet.delete(contentId);
-        }
+        newSet.delete(contentId);
         return newSet;
       });
-      
-      setLikes((prev) => ({
-        ...prev,
-        [contentId]: Math.max((prev[contentId] || 0) + (wasLiked ? 1 : -1), 0),
-      }));
+      setLikes((prev) => ({ ...prev, [contentId]: Math.max((prev[contentId] || 1) - 1, 0) }));
     }
-  }, [userId, userLikes, isLoading]);
+  }, [isAuthenticated, userLikes, isLoading]);
 
   const getLikeCount = useCallback((contentId: string): number => {
     // Load count from Supabase if not already loaded
@@ -119,7 +83,7 @@ export function usePostLikes() {
   }, [userLikes]);
 
   return {
-    toggleLike,
+    like,
     getLikeCount,
     isLiked,
     isLoading,
